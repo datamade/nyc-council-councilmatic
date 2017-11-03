@@ -32,8 +32,8 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
-# In development, set your BACKEND to 'django.core.cache.backends.dummy.DummyCache'
-# To turn on cahcing, run python manage.py createcachetable, and uncomment the DatabaseCache variables below.
+# In development, set your BACKEND to 'django.core.cache.backends.dummy.DummyCache'.
+# To turn on caching, run python manage.py createcachetable, and uncomment the DatabaseCache variables below.
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
@@ -42,7 +42,7 @@ CACHES = {
     }
 }
 
-# Set this to flush the cache at /flush-cache/{FLUSH_KEY}
+# Need to flush the cache? Visit: /flush-cache/{FLUSH_KEY}
 FLUSH_KEY = 'super secret junk'
 
 # Set this to allow Disqus comments to render
