@@ -45,7 +45,7 @@ Afterwards, whenever you want to use this virtual environment to work on nyc-cou
 cp councilmatic/settings_deployment.py.example councilmatic/settings_deployment.py
 ```
 
-Turn on DEBUG, and update your secret to whatever you like.
+Turn on DEBUG, and update your secret key to whatever you like.
 
 ```bash
 SECRET_KEY = 'super secret key'
