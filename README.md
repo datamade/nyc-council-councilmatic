@@ -17,7 +17,6 @@ NYC Councilmatic is free, non-profit, and non-partisan and the easiest way to ac
 Part of the [Councilmatic family](https://www.councilmatic.org/).
 
 
-
 ## Setup
 
 **Install OS level dependencies:**
@@ -32,13 +31,13 @@ We recommend using [virtualenv](http://virtualenv.readthedocs.org/en/latest/virt
 Once you have virtualenvwrapper set up,
 
 ```bash
-mkvirtualenv nyc-councilmatic
-git clone https://github.com/datamade/nyc-councilmatic.git
-cd nyc-councilmatic
+git clone git@github.com:datamade/nyc-council-councilmatic.git
+cd nyc-council-councilmatic
+mkvirtualenv nyc-council-councilmatic
 pip install -r requirements.txt
 ```
 
-Afterwards, whenever you want to use this virtual environment to work on nyc-councilmatic, run `workon nyc-councilmatic`
+Afterwards, whenever you want to use this virtual environment to work on nyc-councilmatic, run `workon nyc-council-councilmatic`
 
 **Create your settings file**
 
@@ -46,8 +45,13 @@ Afterwards, whenever you want to use this virtual environment to work on nyc-cou
 cp councilmatic/settings_deployment.py.example councilmatic/settings_deployment.py
 ```
 
-Then edit `councilmatic/settings_deployment.py`:
-- `USER` should be your username
+Turn on DEBUG, and update your secret to whatever you like.
+
+```bash
+SECRET_KEY = 'super secret key'
+
+DEBUG = True
+```
 
 **Setup your database**
 
@@ -57,13 +61,13 @@ Before we can run the website, we need to create a database.
 createdb nyc_councilmatic
 ```
 
-Then, run migrations
+Then, run migrations.
 
 ```bash
 python manage.py migrate
 ```
 
-Create an admin user - set a username & password when prompted
+Create an admin user. Set a username and password when prompted.
 
 ```bash
 python manage.py createsuperuser
