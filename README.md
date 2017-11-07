@@ -93,7 +93,7 @@ python manage.py runserver
 
 navigate to http://localhost:8000/
 
-## Setup Search
+## Setup Solr search
 
 **Install Open JDK or update Java**
 
@@ -118,29 +118,54 @@ On OS X:
 
 **Download & setup Solr**
 
-``` bash
-wget http://mirror.sdunix.com/apache/lucene/solr/4.10.4/solr-4.10.4.tgz
-tar -xvf solr-4.10.4.tgz
-sudo cp -R solr-4.10.4/example /opt/solr
+NYC Councilmatic uses Solr version 7. If you already have Solr installed for another app, then you can by-pass these installation instructions. Otherwise, carefully read on.
 
-# Copy schema.xml for this app to solr directory
-sudo cp solr_scripts/schema.xml /opt/solr/solr/collection1/conf/schema.xml
+Download latest solr distribution from a [reliable mirror](http://www.apache.org/dyn/closer.cgi/lucene/solr/). The Apache foundation suggests using the [University of Toronto mirror](http://mirror.dsrg.utoronto.ca/apache/lucene/solr/). You need to download two files:
+(1) `solr-7.1.0.tgz` - Solr itself
+(2) solr-7.1.0.tgz.asc - the detached signature for verification. (If you do not find a signature in the Toronto mirror, then grab a signature from [elsewhere](http://www.apache.org/dist/lucene/solr/7.1.0/). You can `curl` or `wget` the signature to the directory where you downloaded Solr.
+
+Next, [verify the package](https://www.apache.org/info/verification.html) using the .asc signature from the official solr mirror. Apache provides some rigid standards for verification, e.g., "face-to-face communication with multiple government-issued photo identification confirmations." However, you can also conduct your own Google background check on the signature owner to validate their identity. 
+
+The next steps are fairly straightforward:
+(1) Untar the directory: `tar xvf solr-7.1.0.tgz`, and `mv` it into `/opt` (or `/Applications`, for Mac users)
+(2) Visit the solr directory: `cd solr-7.1.0/server/solr`
+(3) Create a directory for NYC Councilmatic: `mkdir nyc-council-councilmatic`
+(4) In that directory, create a core file: `touch nyc-council-councilmatic/core.properties`
+(5) Copy the contents of `solr/configsets/_default/` into `solr/nyc-council-councilmatic`: `cp -R configsets/_default/* nyc-council-councilmatic/`
+(6) 
+
+We use a [classic schema file](https://lucene.apache.org/solr/guide/7_1/schema-factory-definition-in-solrconfig.html#switching-from-managed-schema-to-manually-edited-schema-xml). First, rename the managed-schema file to schema.xml:
+
+```
+cd /solr/nyc-council-councilmatic/conf
+mv managed-schema schema.xml
 ```
 
-**Run Solr**
-```bash
-# Next, start the java application that runs solr
-# Do this in another terminal window & keep it running
-# If you see error output, somethings wrong
-cd /opt/solr
-sudo java -jar start.jar
+Then, open `solrconfig.xml` inside `/solr/nyc-council-councilmatic/conf/`. Anywhere between the `<config>` tags, add the following:
+
+```
+<schemaFactory class="ClassicIndexSchemaFactory"/>
 ```
 
-**Index the database**
-```bash
-# back in the nyc-councilmatic directory:
+In `settings_deployment.py`, be sure to include the correct URL in HAYSTACK_CONNECTIONS. The URL should align with the name of the solr core you created above:
+
+```
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+        #'URL': 'http://127.0.0.1:8983/solr'
+        # ...or for multicore...
+        'URL': 'http://127.0.0.1:8983/solr/nyc-council-councilmatic',
+    },
+}
+```
+
+Finally, build your index:
+
+```
 python manage.py rebuild_index
 ```
+
 
 **OPTIONAL: Install and configure Jetty for Solr**
 
