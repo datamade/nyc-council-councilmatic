@@ -93,7 +93,7 @@ python manage.py runserver
 
 navigate to http://localhost:8000/
 
-## Setup Search
+## Setup Solr search
 
 **Install Open JDK or update Java**
 
@@ -116,79 +116,79 @@ On OS X:
     sudo ln -s /Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/java /usr/bin/java
     ```
 
-**Download & setup Solr**
+**Download Solr**
 
-``` bash
-wget http://mirror.sdunix.com/apache/lucene/solr/4.10.4/solr-4.10.4.tgz
-tar -xvf solr-4.10.4.tgz
-sudo cp -R solr-4.10.4/example /opt/solr
+NYC Councilmatic uses Solr version 7 to power legislation searches. If you already have Solr version 7 installed for another app, then you can by-pass these installation instructions. Otherwise, carefully read on.
 
-# Copy schema.xml for this app to solr directory
-sudo cp solr_scripts/schema.xml /opt/solr/solr/collection1/conf/schema.xml
+Download latest solr distribution from a [reliable mirror](http://www.apache.org/dyn/closer.cgi/lucene/solr/). The Apache foundation suggests using the [University of Toronto mirror](http://mirror.dsrg.utoronto.ca/apache/lucene/solr/). You need to download two files:
+(1) `solr-7.1.0.tgz` - Solr itself
+(2) solr-7.1.0.tgz.asc - the detached signature for verification. Visit the [Apache server](http://archive.apache.org/dist/lucene/solr/7.1.0/), and then, `curl` or `wget` the signature to the directory where you downloaded Solr.
+
+With the above downloads, [verify the package](https://www.apache.org/info/verification.html) using the .asc signature. Apache provides some rigid standards for verification, e.g., "face-to-face communication with multiple government-issued photo identification confirmations." However, you can also conduct your own Google background check on the signature owner to validate their identity. 
+
+Finally, untar the directory (`tar xvf solr-7.1.0.tgz`), and `mv` it into `/opt` (or `/Applications`, for Mac users).
+
+Congratulations! You downloaded Solr.
+
+**Basic Solr Setup**
+
+The following steps are fairly straightforward:
+
+1. **Visit** your latest download, take a look at the solr directory (`cd solr-7.1.0/server/solr`), and within it, create a repo for NYC Councilmatic: `mkdir nyc-council-councilmatic`
+2. In the newly created nyc-council-councilmatic repo, **create** a core file: `touch nyc-council-councilmatic/core.properties` (This file helps solr discover cores for multicore processing. That way, a single Solr installation can run multiple apps.)
+3. Solr expects to find several files in the conf repo of Councilmatic. We'll use the example conf (`sample_techproducts_configs`) and pare it down. **Copy** the contents of `solr/configsets/sample_techproducts_configs/` into `solr/nyc-council-councilmatic`: `cp -R configsets/sample_techproducts_configs/* nyc-council-councilmatic/`.
+
+Note: you do not need all the files provided in `sample_techproducts_configs`. You can safely remove several, including: `_rest_managed.json`, `_schema_analysis_stopwords_english.json`, `_schema_analysis_synonyms_english.json`, `mapping-FoldToASCII.txt`, `mapping-ISOLatin1Accent.txt`, `update-script.js`.
+
+**Define Schema and Run Solr**
+
+We use a [classic schema file](https://lucene.apache.org/solr/guide/7_1/schema-factory-definition-in-solrconfig.html#switching-from-managed-schema-to-manually-edited-schema-xml), which defines the searchable fields in your application. You need to do three things to get situated with the Councilmatic schema.
+
+1. Open `solrconfig.xml`, which lives inside `/solr/nyc-council-councilmatic/conf/`. Anywhere between the `<config>` tags, add the following:
+
+```
+<schemaFactory class="ClassicIndexSchemaFactory"/>
 ```
 
-**Run Solr**
-```bash
-# Next, start the java application that runs solr
-# Do this in another terminal window & keep it running
-# If you see error output, somethings wrong
-cd /opt/solr
-sudo java -jar start.jar
+2. Rename the managed-schema file to schema.xml:
+
+```
+cd /solr/nyc-council-councilmatic/conf
+mv managed-schema schema.xml
 ```
 
-**Index the database**
-```bash
-# back in the nyc-councilmatic directory:
+3. The solr_scripts repo in NYC Councilmatic contains a working schema.xml. Copy the contents of this file into `/solr/nyc-council-councilmatic/conf/schema.xml`.
+
+You're almost done - a few steps remain! In `settings_deployment.py`, be sure to include the correct URL in HAYSTACK_CONNECTIONS. The URL should align with the name of the solr core you created above:
+
+```
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+        #'URL': 'http://127.0.0.1:8983/solr'
+        # ...or for multicore...
+        'URL': 'http://127.0.0.1:8983/solr/nyc-council-councilmatic',
+    },
+}
+```
+
+Is your solr running? Go to `/solr-7.1.0/bin`, and execute:
+
+```
+./solr start
+```
+
+Then, visit [http://127.0.0.1:8983/solr/#/](http://127.0.0.1:8983/solr/#/), and see solr in action. If you need to stop solr, do the following:
+
+```
+/solr stop -p 8983
+```
+
+Finally, build your index, and visit `/search` on Councilmatic:
+
+```
 python manage.py rebuild_index
 ```
-
-**OPTIONAL: Install and configure Jetty for Solr**
-
-Just running Solr as described above is probably OK in a development setting.
-To deploy Solr in production, you'll want to use something like Jetty. Here's
-how you'd do that on Ubuntu:
-
-``` bash
-sudo apt-get install jetty
-
-# Backup stock init.d script
-sudo mv /etc/init.d/jetty ~/jetty.orig
-
-# Get init.d script suggested by Solr docs
-sudo cp solr_scripts/jetty.sh /etc/init.d/jetty
-sudo chown root.root /etc/init.d/jetty
-sudo chmod 755 /etc/init.d/jetty
-
-# Add Solr specific configs to /etc/default/jetty
-sudo cp solr_scripts/jetty.conf /etc/default/jetty
-
-# Change ownership of the Solr directory so Jetty can get at it
-sudo chown -R jetty.jetty /opt/solr
-
-# Start up Solr
-sudo service jetty start
-
-# Solr should now be running on port 8983
-```
-
-**Regenerate Solr schema**
-
-While developing, if you need to make changes to the fields that are getting
-indexed or how they are getting indexed, you'll need to regenerate the
-schema.xml file that Solr uses to make it's magic. Here's how that works:
-
-```
-python manage.py build_solr_schema > solr_scripts/schema.xml
-cp solr_scripts/schema.xml /opt/solr/solr/collection1/conf/schema.xml
-```
-
-In order for Solr to use the new schema file, you'll need to restart it.
-
-**Using Solr for more than one Councilmatic on the same server**
-
-If you intend to run more than one instance of Councilmatic on the same server,
-you'll need to take a look at [this README](solr_scripts/README.md) to make sure you're
-configuring things properly.
 
 ## A note on caching
 
