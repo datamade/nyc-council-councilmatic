@@ -116,9 +116,9 @@ On OS X:
     sudo ln -s /Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/java /usr/bin/java
     ```
 
-**Download & setup Solr**
+**Download Solr**
 
-NYC Councilmatic uses Solr version 7. If you already have Solr installed for another app, then you can by-pass these installation instructions. Otherwise, carefully read on.
+NYC Councilmatic uses Solr version 7 to power search fro legislation. If you already have Solr version 7 installed for another app, then you can by-pass these installation instructions. Otherwise, carefully read on.
 
 Download latest solr distribution from a [reliable mirror](http://www.apache.org/dyn/closer.cgi/lucene/solr/). The Apache foundation suggests using the [University of Toronto mirror](http://mirror.dsrg.utoronto.ca/apache/lucene/solr/). You need to download two files:
 (1) `solr-7.1.0.tgz` - Solr itself
@@ -126,26 +126,33 @@ Download latest solr distribution from a [reliable mirror](http://www.apache.org
 
 Next, [verify the package](https://www.apache.org/info/verification.html) using the .asc signature from the official solr mirror. Apache provides some rigid standards for verification, e.g., "face-to-face communication with multiple government-issued photo identification confirmations." However, you can also conduct your own Google background check on the signature owner to validate their identity. 
 
-The next steps are fairly straightforward:
-(1) Untar the directory: `tar xvf solr-7.1.0.tgz`, and `mv` it into `/opt` (or `/Applications`, for Mac users)
-(2) Visit the solr directory: `cd solr-7.1.0/server/solr`
-(3) Create a directory for NYC Councilmatic: `mkdir nyc-council-councilmatic`
-(4) In that directory, create a core file: `touch nyc-council-councilmatic/core.properties`
-(5) Copy the contents of `solr/configsets/_default/` into `solr/nyc-council-councilmatic`: `cp -R configsets/_default/* nyc-council-councilmatic/`
-(6) 
+Finally, untar the directory (`tar xvf solr-7.1.0.tgz`), and `mv` it into `/opt` (or `/Applications`, for Mac users).
 
-We use a [classic schema file](https://lucene.apache.org/solr/guide/7_1/schema-factory-definition-in-solrconfig.html#switching-from-managed-schema-to-manually-edited-schema-xml). First, rename the managed-schema file to schema.xml:
+Congratulations! You downloaded Solr.
+
+**Setup Solr**
+
+The next steps are fairly straightforward:
+(1) Visit your latest download, take a look at the solr directory (`cd solr-7.1.0/server/solr`), and within it, create a repo for NYC Councilmatic: `mkdir nyc-council-councilmatic`
+(3) In the newly created nyc-council-councilmatic repo, create a core file: `touch nyc-council-councilmatic/core.properties` (This file helps solr discover cores for multicore processing. That way, one Solr installation can run multiple apps.)
+(4) Solr expects to find several files in the conf repo of Councilmatic. We'll use the example conf (`sample_techproducts_configs`) and parse it down. Copy the contents of `solr/configsets/sample_techproducts_configs/` into `solr/nyc-council-councilmatic`: `cp -R configsets/sample_techproducts_configs/* nyc-council-councilmatic/`.
+
+Note: you do not need all the files provided in `sample_techproducts_configs`. You can safely remove several, including: _rest_managed.json, _schema_analysis_stopwords_english.json, _schema_analysis_synonyms_english.json, mapping-FoldToASCII.txt, mapping-ISOLatin1Accent.txt, update-script.js.
+
+Next, you need to set-up the NYC Councilmatic schema. We use a [classic schema file](https://lucene.apache.org/solr/guide/7_1/schema-factory-definition-in-solrconfig.html#switching-from-managed-schema-to-manually-edited-schema-xml). First, open `solrconfig.xml`, which lives inside `/solr/nyc-council-councilmatic/conf/`. Anywhere between the `<config>` tags, add the following:
+
+```
+<schemaFactory class="ClassicIndexSchemaFactory"/>
+```
+
+Then, rename the managed-schema file to schema.xml:
 
 ```
 cd /solr/nyc-council-councilmatic/conf
 mv managed-schema schema.xml
 ```
 
-Then, open `solrconfig.xml` inside `/solr/nyc-council-councilmatic/conf/`. Anywhere between the `<config>` tags, add the following:
-
-```
-<schemaFactory class="ClassicIndexSchemaFactory"/>
-```
+The solr_scripts repo in NYC Councilmatic contains a working schema.xml. Copy the contents of this file into `/solr/nyc-council-councilmatic/conf/schema.xml`.
 
 In `settings_deployment.py`, be sure to include the correct URL in HAYSTACK_CONNECTIONS. The URL should align with the name of the solr core you created above:
 
@@ -166,6 +173,17 @@ Finally, build your index:
 python manage.py rebuild_index
 ```
 
+Is your solr running? Go to `/solr-7.1.0/bin`, and run:
+
+```
+./solr start
+```
+
+Then, visit [http://127.0.0.1:8983/solr/#/](http://127.0.0.1:8983/solr/#/), and see solr in action. If you need to stop solr, do the following:
+
+```
+/solr stop -p 8983
+```
 
 **OPTIONAL: Install and configure Jetty for Solr**
 
