@@ -133,11 +133,14 @@ Congratulations! You downloaded Solr.
 **Setup Solr**
 
 The next steps are fairly straightforward:
-(1) Visit your latest download, take a look at the solr directory (`cd solr-7.1.0/server/solr`), and within it, create a repo for NYC Councilmatic: `mkdir nyc-council-councilmatic`
-(3) In the newly created nyc-council-councilmatic repo, create a core file: `touch nyc-council-councilmatic/core.properties` (This file helps solr discover cores for multicore processing. That way, one Solr installation can run multiple apps.)
-(4) Solr expects to find several files in the conf repo of Councilmatic. We'll use the example conf (`sample_techproducts_configs`) and parse it down. Copy the contents of `solr/configsets/sample_techproducts_configs/` into `solr/nyc-council-councilmatic`: `cp -R configsets/sample_techproducts_configs/* nyc-council-councilmatic/`.
 
-Note: you do not need all the files provided in `sample_techproducts_configs`. You can safely remove several, including: _rest_managed.json, _schema_analysis_stopwords_english.json, _schema_analysis_synonyms_english.json, mapping-FoldToASCII.txt, mapping-ISOLatin1Accent.txt, update-script.js.
+(1) Visit your latest download, take a look at the solr directory (`cd solr-7.1.0/server/solr`), and within it, create a repo for NYC Councilmatic: `mkdir nyc-council-councilmatic`
+
+(2) In the newly created nyc-council-councilmatic repo, create a core file: `touch nyc-council-councilmatic/core.properties` (This file helps solr discover cores for multicore processing. That way, one Solr installation can run multiple apps.)
+
+(3) Solr expects to find several files in the conf repo of Councilmatic. We'll use the example conf (`sample_techproducts_configs`) and parse it down. Copy the contents of `solr/configsets/sample_techproducts_configs/` into `solr/nyc-council-councilmatic`: `cp -R configsets/sample_techproducts_configs/* nyc-council-councilmatic/`.
+
+[Note: you do not need all the files provided in `sample_techproducts_configs`. You can safely remove several, including: _rest_managed.json, _schema_analysis_stopwords_english.json, _schema_analysis_synonyms_english.json, mapping-FoldToASCII.txt, mapping-ISOLatin1Accent.txt, update-script.js.]
 
 Next, you need to set-up the NYC Councilmatic schema. We use a [classic schema file](https://lucene.apache.org/solr/guide/7_1/schema-factory-definition-in-solrconfig.html#switching-from-managed-schema-to-manually-edited-schema-xml). First, open `solrconfig.xml`, which lives inside `/solr/nyc-council-councilmatic/conf/`. Anywhere between the `<config>` tags, add the following:
 
