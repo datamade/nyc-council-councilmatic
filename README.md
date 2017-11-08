@@ -130,7 +130,7 @@ Finally, untar the directory (`tar xvf solr-7.1.0.tgz`), and `mv` it into `/opt`
 
 Congratulations! You downloaded Solr.
 
-**Setup Solr**
+**Basic Solr Setup**
 
 The following steps are fairly straightforward:
 
@@ -138,9 +138,11 @@ The following steps are fairly straightforward:
 2. In the newly created nyc-council-councilmatic repo, **create** a core file: `touch nyc-council-councilmatic/core.properties` (This file helps solr discover cores for multicore processing. That way, a single Solr installation can run multiple apps.)
 3. Solr expects to find several files in the conf repo of Councilmatic. We'll use the example conf (`sample_techproducts_configs`) and pare it down. **Copy** the contents of `solr/configsets/sample_techproducts_configs/` into `solr/nyc-council-councilmatic`: `cp -R configsets/sample_techproducts_configs/* nyc-council-councilmatic/`.
 
-Note: you do not need all the files provided in `sample_techproducts_configs`. You can safely remove several, including: `_rest_managed.json`, _schema_analysis_stopwords_english.json`, _schema_analysis_synonyms_english.json`, mapping-FoldToASCII.txt`, mapping-ISOLatin1Accent.txt`, `update-script.js`.
+Note: you do not need all the files provided in `sample_techproducts_configs`. You can safely remove several, including: `_rest_managed.json`, `_schema_analysis_stopwords_english.json`, `_schema_analysis_synonyms_english.json`, `mapping-FoldToASCII.txt`, `mapping-ISOLatin1Accent.txt`, `update-script.js`.
 
-Next, set up the NYC Councilmatic schema. We use a [classic schema file](https://lucene.apache.org/solr/guide/7_1/schema-factory-definition-in-solrconfig.html#switching-from-managed-schema-to-manually-edited-schema-xml). You need to do three things to get situated.
+**Define Schema and Run Solr**
+
+We use a [classic schema file](https://lucene.apache.org/solr/guide/7_1/schema-factory-definition-in-solrconfig.html#switching-from-managed-schema-to-manually-edited-schema-xml), which defines the searchable fields in your application. You need to do three things to get situated with the Councilmatic schema.
 
 1. Open `solrconfig.xml`, which lives inside `/solr/nyc-council-councilmatic/conf/`. Anywhere between the `<config>` tags, add the following:
 
