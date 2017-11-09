@@ -44,8 +44,8 @@ CACHES = {
 # Set this to flush the cache at /flush-cache/{FLUSH_KEY}
 FLUSH_KEY = 'flushitallaway'
 
-# Set this to allow Disqus comments to render
-DISQUS_SHORTNAME = None
+# Set this to allow Disqus comments to render: most recent version of NYC Councilmatic disables comments.
+# DISQUS_SHORTNAME = None
 
 # analytics tracking code
 ANALYTICS_TRACKING_CODE = ''
