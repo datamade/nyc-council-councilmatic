@@ -50,7 +50,7 @@ class NYCBill(Bill):
         if history:
             if bill_type == 'Introduction':
                 if 'executive-signature' in history:
-                    return 'Passed'
+                    return 'Enacted'
                 else:
                     return False
             elif bill_type in ['Resolution', 'Land Use Application', 'Communication', "Mayor's Message", 'Land Use Call-Up']:
