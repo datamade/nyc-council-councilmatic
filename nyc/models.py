@@ -50,7 +50,6 @@ class NYCBill(Bill):
         if history:
             if bill_type == 'Introduction':
                 if 'executive-signature' in history:
-                    # return 'Passed'
                     return 'Enacted'
                 else:
                     return False
