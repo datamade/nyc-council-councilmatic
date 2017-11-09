@@ -28,7 +28,8 @@ class NYCBillIndex(BillIndex, indexes.Indexable):
             index_actions = [a.date for a in obj.actions.all()]
 
             if index_actions:
-                index_actions = max(index_actions)
+                # Newer versions of Solr seem to be fussy about the time format, and we do not need the time, just the date stamp.
+                index_actions = max(index_actions).date()
 
             return index_actions
 
