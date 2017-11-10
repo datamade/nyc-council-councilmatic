@@ -64,7 +64,7 @@ settings_deployment.py
 # Collected Static Files
 static/**
 core/**
-nyc/static/images/ocd-person/*.jpg
+nyc/static/images/ocd-person/*
 /keyrings/live/pubring.gpg~
 /keyrings/live/pubring.kbx~
 /keyrings/live/secring.gpg
@@ -74,3 +74,6 @@ nyc/static/images/ocd-person/*.jpg
 /configs/settings_deployment_staging.py
 /configs/settings_deployment_production.py
 /scripts/validate_service.sh
+
+# Google calendar API
+client_secret.json
