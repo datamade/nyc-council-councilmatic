@@ -21,6 +21,11 @@
                     <i class='fa fa-fw fa-external-link'></i>
                     View on the {{CITY_VOCAB.SOURCE}} website
                 </a>
+
+                <form action="{{event.event_page_url}}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-link"><p class="small"><i class="fa fa-calendar" aria-hidden="true"></i> Add to calendar</p></button>
+                </form>
             </p>
 
             <hr />

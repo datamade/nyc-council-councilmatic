@@ -7,6 +7,8 @@ from datetime import date, timedelta
 import re
 from collections import namedtuple
 
+from .utils import export_event
+
 from nyc.models import NYCBill
 
 from councilmatic_core.models import Event, Organization, Bill
@@ -126,6 +128,7 @@ class NYCCommitteesView(CommitteesView):
 
 class NYCEventDetailView(EventDetailView):
     template_name = 'nyc/event.html'
+    model = Event
 
     def get_context_data(self, **kwargs):
         context = super(EventDetailView, self).get_context_data(**kwargs)
@@ -164,6 +167,12 @@ class NYCEventDetailView(EventDetailView):
             context['related_bills'] = related_bills
 
         return context
+
+    def post(self, request, *args, **kwargs):
+        event = self.get_object()
+        export_event(event)
+
+        return redirect(request.get_full_path())
 
 class NYCCouncilmaticFacetedSearchView(CouncilmaticFacetedSearchView):
 
@@ -220,4 +229,3 @@ class NYCCouncilmaticFacetedSearchView(CouncilmaticFacetedSearchView):
                 kwargs['searchqueryset'] = sqs.order_by('-last_action_date')
 
         return self.form_class(data, **kwargs)
-
