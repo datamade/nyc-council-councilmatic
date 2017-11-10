@@ -190,6 +190,10 @@ Finally, build your index, and visit `/search` on Councilmatic:
 python manage.py rebuild_index
 ```
 
+## Google Calendar API
+
+NYC Councilmatic expects a client_secret.json file. It contains an API client ID and client secret, and so, this file should not appear in version control. You can create your own `json` file by following the [Step 1](https://developers.google.com/google-apps/calendar/quickstart/python) directions provided by Google.
+
 ## A note on caching
 
 Councilmatic uses template fragment caching, made easy with the [django-adv-cache-tag](http://documentup.com/twidi/django-adv-cache-tag) library. Instances of Councilmatic with [notifications](https://github.com/datamade/django-councilmatic-notifications) contain dynamically generated elements that change with each user. We do not cache such elements, but we do cache the content around them. The cached material (cache keys) expires in 600 seconds (ten minutes).
