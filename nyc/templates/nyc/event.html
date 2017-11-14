@@ -17,19 +17,10 @@
             </p>
 
             <p class="small">
-                <a href='{{event.source_url}}' title='View on the {{CITY_VOCAB.SOURCE}} website' target="_blank">
-                    <i class='fa fa-fw fa-external-link'></i>
-                    View on the {{CITY_VOCAB.SOURCE}} website
-                </a>
-
-                <form action="{{event.event_page_url}}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-link"><p class="small"><i class="fa fa-calendar" aria-hidden="true"></i> Add to calendar</p></button>
-                </form>
+                <a class="btn btn-primary btn-sm" href="{% url 'nyc:ical_export' event.slug %}"><i class="fa fa-plus-circle" aria-hidden="true"></i> iCal export</a>
+                <a class="btn btn-primary btn-sm" href="{% url 'nyc:google_calendar_export' event.slug %}"><i class="fa fa-plus-circle" aria-hidden="true"></i> Google calendar</a>
             </p>
-
-            <p><a href="{% url 'nyc:icalendar_dump' event.slug %}">PRESS THIS!</a></p>
-
+            
             <hr />
 
             {% if participants %}

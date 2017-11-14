@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponsePermanentRedirect, HttpResponseNotFound, HttpResponse
+from django.http import HttpResponsePermanentRedirect, HttpResponseNotFound, HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.db import transaction, connection, connections
 
@@ -7,7 +7,7 @@ from datetime import date, timedelta
 import re
 from collections import namedtuple
 
-from .utils import export_event, create_ics_output
+from .utils import google_calendar_export_helper, create_ics_output
 
 from nyc.models import NYCBill
 
@@ -168,15 +168,8 @@ class NYCEventDetailView(EventDetailView):
 
         return context
 
-    def post(self, request, *args, **kwargs):
-        event = self.get_object()
-        # For Google cal
-        # export_event(event)
-
-        return redirect(request.get_full_path())
-
-
-def icalendar_dump(request, slug):
+# Class-based views for calendar exports.
+def ical_export(request, slug):
     event = Event.objects.get(slug=slug)
     output = create_ics_output(event)
   
@@ -184,6 +177,12 @@ def icalendar_dump(request, slug):
     response['Content-Disposition'] = 'attachment; filename={}.ics'.format(event.slug) 
 
     return response
+
+def google_calendar_export(request, slug):
+    event = Event.objects.get(slug=slug)
+    google_calendar_export_helper(event)
+
+    return HttpResponseRedirect(reverse('nyc:event_detail', args=[slug]))
 
 
 class NYCCouncilmaticFacetedSearchView(CouncilmaticFacetedSearchView):
