@@ -9,6 +9,7 @@ from oauth2client.file import Storage
 from icalendar import Calendar, Event
 
 from django.conf import settings 
+from django.http import HttpResponse
 
 from datetime import datetime, timedelta
 
@@ -66,19 +67,21 @@ def export_event(event):
 # Helper function for creating a ICS file.
 def create_ics_output(event):
     cal = Calendar()
-    event_ics = Event()
-    output = ''
+    cal.add('version', '2.0')
+    cal.add('prodid', '-//NYC Councilmatic//nyc.councilmatic.org//EN')
+    cal.add('x-wr-timezone', "US/Eastern")
+    cal.add('method', 'publish')
 
+    event_ics = Event()
     event_ics.add('summary', event.name)
     event_ics.add('location', event.location_name)
     event_ics.add('description', event.description)
     event_ics.add('dtstart', event.start_time)
     event_ics.add('dtend', (event.start_time + timedelta(hours=2)))
+    event_ics.add('dtstamp', event.start_time)
+    event_ics.add('uid', event.ocd_id)
 
     cal.add_component(event_ics)
-
-    for line in cal.content_lines():
-      if line:
-        output += line + "\n"
     
-    return output
+    return cal.to_ical()
+

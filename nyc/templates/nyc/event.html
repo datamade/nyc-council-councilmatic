@@ -28,6 +28,8 @@
                 </form>
             </p>
 
+            <p><a href="{% url 'nyc:icalendar_dump' event.slug %}">PRESS THIS!</a></p>
+
             <hr />
 
             {% if participants %}

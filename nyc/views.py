@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponsePermanentRedirect, HttpResponseNotFound
+from django.http import HttpResponsePermanentRedirect, HttpResponseNotFound, HttpResponse
 from django.core.urlresolvers import reverse
 from django.db import transaction, connection, connections
 
@@ -173,11 +173,18 @@ class NYCEventDetailView(EventDetailView):
         # For Google cal
         # export_event(event)
 
-        # For ical
-        ics_output = create_ics_output(event)
-        # TODO: download the output as an .ics file
-
         return redirect(request.get_full_path())
+
+
+def icalendar_dump(request, slug):
+    event = Event.objects.get(slug=slug)
+    output = create_ics_output(event)
+  
+    response = HttpResponse(output, content_type='text/calendar')
+    response['Content-Disposition'] = 'attachment; filename={}.ics'.format(event.slug) 
+
+    return response
+
 
 class NYCCouncilmaticFacetedSearchView(CouncilmaticFacetedSearchView):
 
