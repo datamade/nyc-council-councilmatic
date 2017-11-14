@@ -5,3 +5,4 @@ pysolr===3.6.0
 django-haystack==2.6.1
 raven==5.30.0
 google-api-python-client==1.6.4
+icalendar==4.0.0

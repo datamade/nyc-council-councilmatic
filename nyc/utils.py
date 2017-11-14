@@ -6,6 +6,7 @@ from apiclient import discovery
 from oauth2client import client
 from oauth2client import tools
 from oauth2client.file import Storage
+from icalendar import Calendar, Event
 
 from django.conf import settings 
 
@@ -46,7 +47,7 @@ def export_event(event):
     http = credentials.authorize(httplib2.Http())
     service = discovery.build('calendar', 'v3', http=http)
 
-    event = {
+    event_google = {
       'summary': event.name,
       'location': event.location_name,
       'description': event.description,
@@ -60,4 +61,24 @@ def export_event(event):
       },
     }
 
-    event = service.events().insert(calendarId='primary', body=event).execute()
+    service.events().insert(calendarId='primary', body=event_google).execute()
+
+# Helper function for creating a ICS file.
+def create_ics_output(event):
+    cal = Calendar()
+    event_ics = Event()
+    output = ''
+
+    event_ics.add('summary', event.name)
+    event_ics.add('location', event.location_name)
+    event_ics.add('description', event.description)
+    event_ics.add('dtstart', event.start_time)
+    event_ics.add('dtend', (event.start_time + timedelta(hours=2)))
+
+    cal.add_component(event_ics)
+
+    for line in cal.content_lines():
+      if line:
+        output += line + "\n"
+    
+    return output

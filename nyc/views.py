@@ -7,7 +7,7 @@ from datetime import date, timedelta
 import re
 from collections import namedtuple
 
-from .utils import export_event
+from .utils import export_event, create_ics_output
 
 from nyc.models import NYCBill
 
@@ -170,7 +170,12 @@ class NYCEventDetailView(EventDetailView):
 
     def post(self, request, *args, **kwargs):
         event = self.get_object()
-        export_event(event)
+        # For Google cal
+        # export_event(event)
+
+        # For ical
+        ics_output = create_ics_output(event)
+        # TODO: download the output as an .ics file
 
         return redirect(request.get_full_path())
 
