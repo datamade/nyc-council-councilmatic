@@ -60,6 +60,7 @@ target/
 
 # Settings
 settings_deployment.py
+.env
 
 # Collected Static Files
 static/**
