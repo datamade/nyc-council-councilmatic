@@ -1,20 +1,11 @@
 #!/bin/bash
 
-# Make project directory if it doesn't exist. This is mainly to ensure that these scripts work on a bare server
+# Cause entire deployment to fail if supervisor fails
+set -euo pipefail
 
-rm -Rf /home/datamade/nyc
-mkdir -p /home/datamade/nyc
-
-if [ "$DEPLOYMENT_GROUP_NAME" == "staging" ]
-then
-    rm -Rf /home/datamade/nyc-staging
-    mkdir -p /home/datamade/nyc-staging
-fi
-if [ "$DEPLOYMENT_GROUP_NAME" == "production" ]
-then
-    rm -Rf /home/datamade/nyc-councilmatic
-    mkdir -p /home/datamade/nyc-councilmatic
-fi
+# NYC Council Councilmatic deploys on two different servers: staging and Councilmatic. For this reason, we need not differentiate between two repos. 
+rm -Rf /home/datamade/nyc-council-councilmatic
+mkdir -p /home/datamade/nyc-council-councilmatic
 
 # Decrypt blackbox-encrypted files 
 cd /opt/codedeploy-agent/deployment-root/$DEPLOYMENT_GROUP_ID/$DEPLOYMENT_ID/deployment-archive/ && chown -R datamade.datamade . && sudo -H -u datamade blackbox_postdeploy
