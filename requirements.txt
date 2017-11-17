@@ -3,3 +3,4 @@ django-councilmatic==0.8.3
 django-councilmatic-notifications<0.2
 pysolr===3.6.0
 django-haystack==2.6.1
+gunicorn==19.6.0
