@@ -138,7 +138,7 @@ The following steps are fairly straightforward:
 2. In the newly created nyc-council-councilmatic repo, **create** a core file: `touch nyc-council-councilmatic/core.properties` (This file helps solr discover cores for multicore processing. That way, a single Solr installation can run multiple apps.)
 3. Solr expects to find several files in the conf repo of Councilmatic. We'll use the example conf (`sample_techproducts_configs`) and pare it down. **Copy** the contents of `solr/configsets/sample_techproducts_configs/` into `solr/nyc-council-councilmatic`: `cp -R configsets/sample_techproducts_configs/* nyc-council-councilmatic/`.
 
-Note: you do not need all the files provided in `sample_techproducts_configs`. You can safely remove several, including: `_rest_managed.json`, `_schema_analysis_stopwords_english.json`, `_schema_analysis_synonyms_english.json`, `mapping-FoldToASCII.txt`, `mapping-ISOLatin1Accent.txt`, `update-script.js`.
+Note: you do not need all the files provided in `sample_techproducts_configs`. You can safely remove several, including: `_rest_managed.json`, `_schema_analysis_stopwords_english.json`, `_schema_analysis_synonyms_english.json`, `mapping-FoldToASCII.txt`, `mapping-ISOLatin1Accent.txt`, `update-script.js`. You can peek inside `solr_configs` in the nyc-council-councilmatic repo to see what you do and do not need. 
 
 **Define Schema and Run Solr**
 
@@ -157,7 +157,7 @@ cd /solr/nyc-council-councilmatic/conf
 mv managed-schema schema.xml
 ```
 
-3. The solr_scripts repo in NYC Councilmatic contains a working schema.xml. Copy the contents of this file into `/solr/nyc-council-councilmatic/conf/schema.xml`.
+3. The `solr_configs` repo in NYC Councilmatic contains a working schema.xml. Copy the contents of this file into `/solr/nyc-council-councilmatic/conf/schema.xml`.
 
 You're almost done - a few steps remain! In `settings_deployment.py`, be sure to include the correct URL in HAYSTACK_CONNECTIONS. The URL should align with the name of the solr core you created above:
 
@@ -188,6 +188,35 @@ Finally, build your index, and visit `/search` on Councilmatic:
 
 ```
 python manage.py rebuild_index
+```
+
+## Dockerize Solr
+
+You can run Solr locally, if you please. Containers, however, make life easier. Containers – as the name implies – are autonomous packages of code, little presents under the Christmas tree. All components of a Django application can be "containerized," [using Docker](https://www.docker.com/what-container). For ease of deployment, we put Solr inside a Docker container. 
+
+Look at `docker-compose.yml`. It includes a solr container (or "service") called nyccouncilmatic_solr. This container has an image – [layers of code downloaded from Docker to disk](https://hub.docker.com/_/solr/). It also includes a list of volumes – resources shared between the host and the container. The first volume in the solr container has an environment variable: you need to customize it. Visit the `.env` file at the root of nyc-council-councilmatic. The DATA_DIR variable points to an empty repo, somewhere on your local machine. You can put this empty repo wherever you like. The following makes a couple suggestions:
+
+```
+# on Linux
+DATA_DIR='/data/nyccouncilmatic-solr'
+# on MacOS
+DATA_DIR='/tmp/nyccouncilmatic-solr'
+```
+
+But why? This empty repo enforces data persistence. Data persists better on the host, then on the  impermanent Docker container. (Docker philosophy purports the temporality of containers. A container should do its work, then “poof,” go away.)
+
+Now, you are ready to instantiate your solr container! Run:
+
+```
+docker-compose up
+# Or, run it in the background
+docker-compose up -d
+```
+
+You can stop the container (if running as a daemon process), whenever you please:
+
+```
+docker-compose stop nyccouncilmatic_solr
 ```
 
 ## A note on caching
