@@ -74,6 +74,7 @@ nyc/static/images/ocd-person/*
 /configs/settings_deployment_staging.py
 /configs/settings_deployment_production.py
 /scripts/validate_service.sh
+/solr_configs/nyc-council-councilmatic/*
 
 # Google calendar API
 client_secret.json
