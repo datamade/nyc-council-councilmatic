@@ -5,8 +5,10 @@ services:
     container_name: nyccouncilmatic_solr
     volumes:
       - "${DATA_DIR}:/opt/solr/server/solr/mycores:rw"
+      # - ./solr_configs:/opt/solr/server/solr/mycores:rw
       - ./solr_configs:/nyc_configs
     command: sh -c 'solr-precreate nyc-council-councilmatic /nyc_configs'
+    # command: sh -c 'solr-precreate nyc-council-councilmatic /opt/solr/server/solr/mycores/nyc-council-councilmatic/conf'
     expose:
       - "8983"
     ports: 
