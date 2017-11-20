@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/datamade/nyc
+    destination: /home/datamade/nyc-council-councilmatic
 hooks:
   BeforeInstall:
     - location: scripts/before_install.sh

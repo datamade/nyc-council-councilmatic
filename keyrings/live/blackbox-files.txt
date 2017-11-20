@@ -1,6 +1,9 @@
+configs/nyc-council-staging.conf.nginx
+configs/nyc-council-staging.conf.supervisor
 configs/settings_deployment_production.py
 configs/settings_deployment_staging.py
 scripts/after_install.sh
 scripts/app_start.sh
 scripts/app_stop.sh
+scripts/nyc-council-staging-crontask
 scripts/validate_service.sh
