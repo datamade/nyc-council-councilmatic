@@ -205,6 +205,10 @@ DATA_DIR='/tmp/nyccouncilmatic-solr'
 
 But why? This empty repo enforces data persistence. Data persists better on the host, then on the  impermanent Docker container. (Docker philosophy purports the temporality of containers. A container should do its work, then “poof,” go away.)
 
+Dockerizing Solr comes with a few more "gotchas". We use [`solr-create -c nyc-council-councilmatic`](https://github.com/docker-solr/docker-solr#creating-cores) to create the nyc-council-councilmatic solr core. `solr-create` (as opposed to `solr-precreate`) insures that Solr rereads the schema file. However, the `solr-create` command [does not (re)create the core, if it finds a pre-existing core directory](https://github.com/docker-solr/docker-solr/blob/master/7.1/alpine/scripts/solr-create#L38). Thus, we tell Solr to discover data elsewhere:
+(1) by telling docker-compose to mount data here: `/nyc-data`
+(2) by pointing the solrconfig.xml to this location: `<dataDir>/nyc-data</dataDir>`  
+
 Now, you are ready to instantiate your solr container! Run:
 
 ```
