@@ -194,7 +194,7 @@ python manage.py rebuild_index
 
 You can run Solr locally, if you please. Containers, however, make life easier. Containers – as the name implies – are autonomous packages of code, little presents under the Christmas tree. All components of a Django application can be "containerized," [using Docker](https://www.docker.com/what-container). For ease of deployment, we put Solr inside a Docker container. 
 
-Look at `docker-compose.yml`. It includes a solr container (or "service") called nyccouncilmatic_solr. This container has an image – [layers of code downloaded from Docker to disk](https://hub.docker.com/_/solr/). It also includes a list of volumes – resources shared between the host and the container. The first volume in the solr container has an environment variable: you need to customize it. Visit the `.env` file at the root of nyc-council-councilmatic. The DATA_DIR variable points to an empty repo, somewhere on your local machine. You can put this empty repo wherever you like. The following makes a couple suggestions:
+Look at `docker-compose.yml`. It includes a solr container (or "service") called nyccouncilmatic_solr. This container has an image – [layers of code downloaded from Docker to disk](https://hub.docker.com/_/solr/). It also includes a list of volumes – resources shared between the host and the container. The first volume in the solr container has an environment variable: you need to customize it. Create an `.env` file at the root of nyc-council-councilmatic. You need to add a DATA_DIR variable that points to an empty repo, somewhere on your local machine. You can put this empty repo wherever you like. The following makes a couple suggestions:
 
 ```
 # on Linux
@@ -204,6 +204,10 @@ DATA_DIR='/tmp/nyccouncilmatic-solr'
 ```
 
 But why? This empty repo enforces data persistence. Data persists better on the host, then on the  impermanent Docker container. (Docker philosophy purports the temporality of containers. A container should do its work, then “poof,” go away.)
+
+Dockerizing Solr comes with a few more "gotchas". We use [`solr-create -c nyc-council-councilmatic`](https://github.com/docker-solr/docker-solr#creating-cores) to create the nyc-council-councilmatic solr core. `solr-create` (as opposed to `solr-precreate`) insures that Solr rereads the schema file. However, the `solr-create` command [does not (re)create the core, if it finds a pre-existing core directory](https://github.com/docker-solr/docker-solr/blob/master/7.1/alpine/scripts/solr-create#L38). Thus, we tell Solr to discover data elsewhere:
+(1) by telling docker-compose to mount data here: `/nyc-data`
+(2) by pointing the solrconfig.xml to this location: `<dataDir>/nyc-data</dataDir>`  
 
 Now, you are ready to instantiate your solr container! Run:
 

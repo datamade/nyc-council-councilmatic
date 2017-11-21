@@ -102,7 +102,7 @@
        replication is in use, this should match the replication
        configuration.
     -->
-  <dataDir>${solr.data.dir:}</dataDir>
+  <dataDir>/nyc-data</dataDir>
 
 
   <!-- The DirectoryFactory to use for indexes.
