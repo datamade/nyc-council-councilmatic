@@ -11,8 +11,6 @@ install:
 - pip install --upgrade -r requirements.txt
 addons:
   postgresql: 9.6.2
-before_script:
-- mv configs/settings_deployment_test.py councilmatic/settings_deployment.py
 script:
 - python manage.py migrate
 - pytest
