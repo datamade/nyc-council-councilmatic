@@ -19,11 +19,12 @@ try:
 except ImportError:
     flags = None
 
-# Helper function for exporting events to Google calendar.
 def get_credentials():
-    """Gets valid user credentials from storage.
+    """This helper function assists in exproting events to Google calendar.
+    It gets valid user credentials from storage.
     If nothing has been stored, or if the stored credentials are invalid,
-    the OAuth2 flow is completed to obtain the new credentials.
+    the OAuth2 flow obtains the new credentials.
+    Most of this code comes directly from the Google calendar docs: https://developers.google.com/google-apps/calendar/quickstart/python
     """
     home_dir = os.path.expanduser('~')
     credential_dir = os.path.join(home_dir, '.credentials')
@@ -42,7 +43,6 @@ def get_credentials():
 
     return credentials
 
-# Helper function for exporting events to Google calendar.
 def google_calendar_export_helper(event):
     credentials = get_credentials()
     http = credentials.authorize(httplib2.Http())
@@ -64,7 +64,6 @@ def google_calendar_export_helper(event):
 
     service.events().insert(calendarId='primary', body=event_google).execute()
 
-# Helper function for creating a ICS file.
 def create_ics_output(event):
     cal = Calendar()
     cal.add('version', '2.0')
