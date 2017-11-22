@@ -10,24 +10,26 @@ install:
 - pip install --upgrade pip
 - pip install --upgrade -r requirements.txt
 addons:
-  postgresql: '9.4'
+  postgresql: 9.6.2
 before_script:
 - mv configs/settings_deployment_test.py councilmatic/settings_deployment.py
-script: python manage.py migrate
+script:
+- python manage.py migrate
+- pytest
 deploy:
   - provider: codedeploy
     access_key_id: AKIAJNYGDLOJKHOUWCAA
     secret_access_key:
-      secure: XwYvq3lcX+IBilzN5vDWWKNbcsPy9g/ogzwZazA4MYDsZ4El2WHr4sKsdA66dhCnnaNcWIgVGh8lOsp7MtXulM5YVNfAY462S29cS/4N+nzQV/92vNi9XmrfkC2ioQXfrLSA+4Iq4lQbVasYpg15Tr3UaWnf+uxKlN6qRZ4XawUHNuXv5dPxJKBtqIvZJnBrO8elMiz85PvZQbPme5Vb4sMLm0S4PrP/vy5z2JNMdxqr4870Xc+rvF0NWAARJZycYs6LkpTZW8uWeVXk8V8IfQfJcgU0T5FrzIKSoBNWt4qUQyJLwhVk7bXmzKC+rp0P/VeysPuE6nFZpEltdOcxmX+2e/GQAgFQAMuQL9btavNDh1tyc0+u2jzI4RLlmgDr6Rble2jiw+tEcflCwcfmQqr8Kt2itHCgcIerI5VzpSQ1DL+iC5xgDeUtuIrN6bax/AYcQ/5etWVXEV1mWUzj6oAaP/X91AiSPt7ebQKprcaoxZ5IAkFD1XW8NX4c7oKHOz+bhzTgnJGZtE/XgoC6jZDzhUrlmjH/sq4bRJCtr3aXLBZX6MWz1AzYKg54lLI2EHOG6uOXsp/Pd4dCyLAQ+m8EJdNefaqK+x2CRJT4qZw1iG+KcekHRFKDFUjf1kYdoO1wwJe3LhPMYJv/JZCEq8yKD5QRJ6NFHMByWQiWzeI=
-    application: nyc-councilmatic
+      secure: Li3Vm/04cHNGF5Bnuh293no+BjKyPcrll7soBu20mKIL5e93lo5g8pJBgIIgxvG9os+0dFy7ehb07FOMNtX4+DlpG2OIFfMnhUiq2YAgwK7emdQtYVnw4D2EuubuflHia81p/0/6CmBugnI1COPIRfBF8FzZmU26xb/dtmljpq79TVCRHuswphQBaQzqxPHndhjgD71HeRTQA6WW9yjX/M/Ps5baLHcj2nKABIZzxFVUK+07QuRymAiWnavMxqMC5XGDpSNnErRT+GolGB9kehwtk1ra1tNU6Tw9BzxjYy4q6Lfpz2b9vZdMjETpSt8FOJr8bWr+V6XN6PF7bv44641SsaGyytaNSCEOtvyeZeMQm5PjwkeWZN2heL2lc7F/cL0DmyI3svltSG2vFIqlQu5VnQqQ2OrVel4dadP86w7Tv+1Cel7KFOGJxx7waUEqTvGy92WzY7IuAx348gIbzGOQ7WsuOLEVDC6SjY06SpvRU69I3eMFXjoN4T7SPxHb+XF3vj6yZbE0iLocAYCA/VNJ/6Tdee0ZSwZ726vpsmBMDcSBEyvkvfqTrwl8xKsViabMaAnHsuQdo2VJG2FJy2mzcGFgcMtR6/SdQ+PIiSh0FGl2wEegiSRCjTquAD8E6KxZRzQhm6b48aRmUyG70x8iLiSSTSQAo1Ui8vyw/RM=
+    application: nyc-council-councilmatic
     deployment_group: staging
     on:
       branch: master
   - provider: codedeploy
     access_key_id: AKIAJNYGDLOJKHOUWCAA
     secret_access_key:
-      secure: XwYvq3lcX+IBilzN5vDWWKNbcsPy9g/ogzwZazA4MYDsZ4El2WHr4sKsdA66dhCnnaNcWIgVGh8lOsp7MtXulM5YVNfAY462S29cS/4N+nzQV/92vNi9XmrfkC2ioQXfrLSA+4Iq4lQbVasYpg15Tr3UaWnf+uxKlN6qRZ4XawUHNuXv5dPxJKBtqIvZJnBrO8elMiz85PvZQbPme5Vb4sMLm0S4PrP/vy5z2JNMdxqr4870Xc+rvF0NWAARJZycYs6LkpTZW8uWeVXk8V8IfQfJcgU0T5FrzIKSoBNWt4qUQyJLwhVk7bXmzKC+rp0P/VeysPuE6nFZpEltdOcxmX+2e/GQAgFQAMuQL9btavNDh1tyc0+u2jzI4RLlmgDr6Rble2jiw+tEcflCwcfmQqr8Kt2itHCgcIerI5VzpSQ1DL+iC5xgDeUtuIrN6bax/AYcQ/5etWVXEV1mWUzj6oAaP/X91AiSPt7ebQKprcaoxZ5IAkFD1XW8NX4c7oKHOz+bhzTgnJGZtE/XgoC6jZDzhUrlmjH/sq4bRJCtr3aXLBZX6MWz1AzYKg54lLI2EHOG6uOXsp/Pd4dCyLAQ+m8EJdNefaqK+x2CRJT4qZw1iG+KcekHRFKDFUjf1kYdoO1wwJe3LhPMYJv/JZCEq8yKD5QRJ6NFHMByWQiWzeI=
-    application: nyc-councilmatic
+      secure: Li3Vm/04cHNGF5Bnuh293no+BjKyPcrll7soBu20mKIL5e93lo5g8pJBgIIgxvG9os+0dFy7ehb07FOMNtX4+DlpG2OIFfMnhUiq2YAgwK7emdQtYVnw4D2EuubuflHia81p/0/6CmBugnI1COPIRfBF8FzZmU26xb/dtmljpq79TVCRHuswphQBaQzqxPHndhjgD71HeRTQA6WW9yjX/M/Ps5baLHcj2nKABIZzxFVUK+07QuRymAiWnavMxqMC5XGDpSNnErRT+GolGB9kehwtk1ra1tNU6Tw9BzxjYy4q6Lfpz2b9vZdMjETpSt8FOJr8bWr+V6XN6PF7bv44641SsaGyytaNSCEOtvyeZeMQm5PjwkeWZN2heL2lc7F/cL0DmyI3svltSG2vFIqlQu5VnQqQ2OrVel4dadP86w7Tv+1Cel7KFOGJxx7waUEqTvGy92WzY7IuAx348gIbzGOQ7WsuOLEVDC6SjY06SpvRU69I3eMFXjoN4T7SPxHb+XF3vj6yZbE0iLocAYCA/VNJ/6Tdee0ZSwZ726vpsmBMDcSBEyvkvfqTrwl8xKsViabMaAnHsuQdo2VJG2FJy2mzcGFgcMtR6/SdQ+PIiSh0FGl2wEegiSRCjTquAD8E6KxZRzQhm6b48aRmUyG70x8iLiSSTSQAo1Ui8vyw/RM=
+    application: nyc-council-councilmatic
     deployment_group: production
     on:
       tags: true
