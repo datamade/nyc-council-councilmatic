@@ -1,11 +1,13 @@
 from django.shortcuts import render
-from django.http import HttpResponsePermanentRedirect, HttpResponseNotFound
+from django.http import HttpResponsePermanentRedirect, HttpResponseNotFound, HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.db import transaction, connection, connections
 
 from datetime import date, timedelta
 import re
 from collections import namedtuple
+
+from .utils import google_calendar_export_helper, create_ics_output
 
 from nyc.models import NYCBill
 
@@ -126,6 +128,7 @@ class NYCCommitteesView(CommitteesView):
 
 class NYCEventDetailView(EventDetailView):
     template_name = 'nyc/event.html'
+    model = Event
 
     def get_context_data(self, **kwargs):
         context = super(EventDetailView, self).get_context_data(**kwargs)
@@ -164,6 +167,23 @@ class NYCEventDetailView(EventDetailView):
             context['related_bills'] = related_bills
 
         return context
+
+# Class-based views for calendar exports.
+def ical_export(request, slug):
+    event = Event.objects.get(slug=slug)
+    output = create_ics_output(event)
+  
+    response = HttpResponse(output, content_type='text/calendar')
+    response['Content-Disposition'] = 'attachment; filename={}.ics'.format(event.slug) 
+
+    return response
+
+def google_calendar_export(request, slug):
+    event = Event.objects.get(slug=slug)
+    google_calendar_export_helper(event)
+
+    return HttpResponseRedirect(reverse('nyc:event_detail', args=[slug]))
+
 
 class NYCCouncilmaticFacetedSearchView(CouncilmaticFacetedSearchView):
 
@@ -220,4 +240,3 @@ class NYCCouncilmaticFacetedSearchView(CouncilmaticFacetedSearchView):
                 kwargs['searchqueryset'] = sqs.order_by('-last_action_date')
 
         return self.form_class(data, **kwargs)
-

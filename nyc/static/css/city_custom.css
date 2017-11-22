@@ -41,7 +41,13 @@
     margin-top: 20px;
 }
 
-/* Labels */
+/* Labels, Buttons */
 .label-enacted{
     background-color: #22B24C;
 }
+
+.btn-link {
+    padding: 0;
+    font-size: 16px;
+}
+

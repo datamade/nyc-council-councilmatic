@@ -17,12 +17,10 @@
             </p>
 
             <p class="small">
-                <a href='{{event.source_url}}' title='View on the {{CITY_VOCAB.SOURCE}} website' target="_blank">
-                    <i class='fa fa-fw fa-external-link'></i>
-                    View on the {{CITY_VOCAB.SOURCE}} website
-                </a>
+                <a class="btn btn-primary btn-sm" href="{% url 'nyc:ical_export' event.slug %}"><i class="fa fa-plus-circle" aria-hidden="true"></i> iCal & Outlook export</a>
+                <a class="btn btn-primary btn-sm" href="{% url 'nyc:google_calendar_export' event.slug %}"><i class="fa fa-plus-circle" aria-hidden="true"></i> Google calendar</a>
             </p>
-
+            
             <hr />
 
             {% if participants %}

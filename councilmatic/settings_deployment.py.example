@@ -71,6 +71,13 @@ EMAIL_HOST_USER=''
 EMAIL_HOST_PASSWORD=''
 DEFAULT_FROM_EMAIL='Custom sender name <email@email.org>'
 
+EXTRA_APPS = ('raven.contrib.django.raven_compat',)
+
+# Log to the Sentry project of your choice: for development, you should our Integration Testing Project
+RAVEN_CONFIG = {
+    'dsn': '',
+}
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -85,3 +92,8 @@ LOGGING = {
         },
     },
 }
+
+# Google calendar API
+SCOPES = 'https://www.googleapis.com/auth/calendar' # for read/write access
+CLIENT_SECRET_FILE = '' # the name of your Google-generated json file
+APPLICATION_NAME = 'NYC Councilmatic'

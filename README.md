@@ -190,6 +190,10 @@ Finally, build your index, and visit `/search` on Councilmatic:
 python manage.py rebuild_index
 ```
 
+## Google Calendar API
+
+NYC Councilmatic expects a client_secret.json file. It contains an API client ID and client secret, and so, this file should not appear in version control. You can create your own `json` file by following the [Step 1](https://developers.google.com/google-apps/calendar/quickstart/python) directions provided by Google.
+
 ## Dockerize Solr
 
 You can run Solr locally, if you please. Containers, however, make life easier. Containers – as the name implies – are autonomous packages of code, little presents under the Christmas tree. All components of a Django application can be "containerized," [using Docker](https://www.docker.com/what-container). For ease of deployment, we put Solr inside a Docker container. 
