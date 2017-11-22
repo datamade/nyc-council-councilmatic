@@ -37,7 +37,6 @@ CACHES = {
 # Set this to flush the cache at /flush-cache/{FLUSH_KEY}
 FLUSH_KEY = 'flushitallaway'
 
-# analytics tracking code
 ANALYTICS_TRACKING_CODE = ''
 
 HEADSHOT_PATH = os.path.join(os.path.dirname(__file__), '..'
