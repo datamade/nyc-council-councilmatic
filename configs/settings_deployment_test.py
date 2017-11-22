@@ -1,16 +1,11 @@
-# These are all the settings that are specific to a deployment
-
 import os
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'testing secrets'
+SECRET_KEY = 'la testa degli italiani'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Set this to True while you are developing
 DEBUG = True
-
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -26,9 +21,7 @@ DATABASES = {
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
-        #'URL': 'http://127.0.0.1:8983/solr'
-        # ...or for multicore...
-        'URL': 'http://127.0.0.1:8983/solr/nyc',
+        'URL': 'http://127.0.0.1:8983/solr/nyc-council-councilmatic',
     },
 }
 
