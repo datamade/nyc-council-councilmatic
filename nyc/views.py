@@ -182,9 +182,6 @@ def google_calendar_export(request, slug):
     event = Event.objects.get(slug=slug)
     google_calendar_export_helper(event)
 
-    # import pdb
-    # pdb.set_trace()
-    
     return HttpResponseRedirect(reverse('nyc:event_detail', args=[slug]))
 
 

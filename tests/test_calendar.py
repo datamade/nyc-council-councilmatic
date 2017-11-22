@@ -3,7 +3,7 @@ import pytest
 from django.core.urlresolvers import reverse
 
 from councilmatic_core.models import Event
-from nyc.utils import create_ics_output, google_calendar_export_helper
+from nyc.utils import create_ics_output
   
 @pytest.mark.django_db
 def test_ics_output():
