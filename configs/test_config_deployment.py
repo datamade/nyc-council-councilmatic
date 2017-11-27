@@ -85,3 +85,5 @@ RQ_QUEUES = {
 USING_NOTIFICATIONS = True
 
 ROOT_URLCONF = 'councilmatic.urls'
+
+TIME_ZONE = 'US/Eastern'

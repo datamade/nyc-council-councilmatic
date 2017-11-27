@@ -1,68 +1,26 @@
-from __future__ import print_function
-import httplib2
-import os
-
-from apiclient import discovery
-from oauth2client import client
-from oauth2client import tools
-from oauth2client.file import Storage
 from icalendar import Calendar, Event
 
 from django.conf import settings 
-from django.http import HttpResponse
 
 from datetime import datetime, timedelta
 
-try:
-    import argparse
-    flags = tools.argparser.parse_args([])
-except ImportError:
-    flags = None
 
-def get_credentials():
-    """This helper function assists in exproting events to Google calendar.
-    It gets valid user credentials from storage.
-    If nothing has been stored, or if the stored credentials are invalid,
-    the OAuth2 flow obtains the new credentials.
-    Most of this code comes directly from the Google calendar docs: https://developers.google.com/google-apps/calendar/quickstart/python
-    """
-    home_dir = os.path.expanduser('~')
-    credential_dir = os.path.join(home_dir, '.credentials')
-    if not os.path.exists(credential_dir):
-        os.makedirs(credential_dir)
-    credential_path = os.path.join(credential_dir,
-                                   'calendar-python-quickstart.json')
+def create_google_cal_link(event):
+    time_fmt = '%Y%m%dT%H%M%SZ'
 
-    store = Storage(credential_path)
-    credentials = store.get()
-    if not credentials or credentials.invalid:
-        flow = client.flow_from_clientsecrets(settings.CLIENT_SECRET_FILE, settings.SCOPES)
-        flow.user_agent = settings.APPLICATION_NAME
-        if flags:
-            credentials = tools.run_flow(flow, store, flags)
+    event_url = ('https://www.google.com/calendar/render?action=TEMPLATE&text={text}'
+        '&dates={start_time}/{end_time}'
+        '&details={details}'
+        '&location={location}'
+        '&sf=true&output=xml').format(text=event.name.strip(),
+                start_time=event.start_time.strftime(time_fmt),
+                end_time=(event.start_time + timedelta(hours=2)).strftime(time_fmt),
+                details=event.description.strip(),
+                location=event.location_name.strip())
 
-    return credentials
 
-def google_calendar_export_helper(event):
-    credentials = get_credentials()
-    http = credentials.authorize(httplib2.Http())
-    service = discovery.build('calendar', 'v3', http=http)
+    return event_url.replace(' ', '+')
 
-    event_google = {
-      'summary': event.name,
-      'location': event.location_name,
-      'description': event.description,
-      'start': {
-        'dateTime': event.start_time.isoformat(),
-        'timeZone': settings.TIME_ZONE,
-      },
-      'end': {
-        'dateTime': (event.start_time + timedelta(hours=2)).isoformat(),
-        'timeZone': settings.TIME_ZONE,
-      },
-    }
-
-    service.events().insert(calendarId='primary', body=event_google).execute()
 
 def create_ics_output(event):
     cal = Calendar()

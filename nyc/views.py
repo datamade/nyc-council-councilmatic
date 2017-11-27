@@ -7,7 +7,7 @@ from datetime import date, timedelta
 import re
 from collections import namedtuple
 
-from .utils import google_calendar_export_helper, create_ics_output
+from .utils import create_google_cal_link, create_ics_output
 
 from nyc.models import NYCBill
 
@@ -134,6 +134,9 @@ class NYCEventDetailView(EventDetailView):
         context = super(EventDetailView, self).get_context_data(**kwargs)
         event = context['event']
 
+        event_url = create_google_cal_link(event)
+        context['event_url'] = event_url
+
         # Logic for getting relevant board report information.
         with connection.cursor() as cursor:
             query = '''
@@ -168,7 +171,7 @@ class NYCEventDetailView(EventDetailView):
 
         return context
 
-# Class-based views for calendar exports.
+# Views for calendar exports.
 def ical_export(request, slug):
     event = Event.objects.get(slug=slug)
     output = create_ics_output(event)
@@ -177,13 +180,6 @@ def ical_export(request, slug):
     response['Content-Disposition'] = 'attachment; filename={}.ics'.format(event.slug) 
 
     return response
-
-def google_calendar_export(request, slug):
-    event = Event.objects.get(slug=slug)
-    google_calendar_export_helper(event)
-
-    return HttpResponseRedirect(reverse('nyc:event_detail', args=[slug]))
-
 
 class NYCCouncilmaticFacetedSearchView(CouncilmaticFacetedSearchView):
 

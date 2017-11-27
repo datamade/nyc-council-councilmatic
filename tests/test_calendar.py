@@ -3,15 +3,15 @@ import pytest
 from django.core.urlresolvers import reverse
 
 from councilmatic_core.models import Event
-from nyc.utils import create_ics_output
+from nyc.utils import create_ics_output, create_google_cal_link
   
 @pytest.mark.django_db
 def test_ics_output():
-  event = Event.objects.all().first()
-  ics_content = create_ics_output(event).decode("utf-8")
+    event = Event.objects.all().first()
+    ics_content = create_ics_output(event).decode("utf-8")
 
-  # The content should include the event name.
-  assert (event.name in ics_content) == True 
+    # The content should include the event name.
+    assert (event.name in ics_content) == True 
 
 @pytest.mark.django_db
 def test_ical_export(django_db_setup, client):
@@ -25,15 +25,11 @@ def test_ical_export(django_db_setup, client):
     assert response['Content-Disposition'] == 'attachment; filename={}.ics'.format(event.slug)
 
 @pytest.mark.django_db
-def test_google_calendar_export(django_db_setup, client, mocker):
-    mock_gcal_helper = mocker.patch('nyc.views.google_calendar_export_helper', autospec=True)
-
+def test_create_google_cal_link(django_db_setup):
     event = Event.objects.all().first()
-    url = reverse('nyc:google_calendar_export', kwargs={'slug': event.slug})
-    response = client.get(url)
+    cal_url = create_google_cal_link(event)
 
-    event_arg, _ = mock_gcal_helper.call_args
-    # The event called in google_calendar_export_helper should be the same as the event passed to the view.
-    assert event_arg[0] == event
-    # The response should redirect.
-    assert response.status_code == 302
+    # The output of create_google_cal_link should contain particular substrings. 
+    assert (event.name.strip().replace(' ', '+') in cal_url) == True
+    assert (event.start_time.strftime('%Y%m%dT%H%M%SZ') in cal_url) == True
+    assert (event.location_name.strip().replace(' ', '+') in cal_url) == True
