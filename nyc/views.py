@@ -181,7 +181,6 @@ def ical_export(request, slug):
 
     return response
 
-
 class NYCCouncilmaticFacetedSearchView(CouncilmaticFacetedSearchView):
 
     def build_form(self, form_kwargs=None):
