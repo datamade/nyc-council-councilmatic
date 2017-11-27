@@ -6,17 +6,20 @@ from datetime import datetime, timedelta
 
 
 def create_google_cal_link(event):
+    time_fmt = '%Y%m%dT%H%M%SZ'
+
     event_url = ('https://www.google.com/calendar/render?action=TEMPLATE&text={text}'
         '&dates={start_time}/{end_time}'
         '&details={details}'
         '&location={location}'
         '&sf=true&output=xml').format(text=event.name.strip(),
-                start_time=event.start_time.strftime("%Y%m%dT%H%M%SZ"),
-                end_time=(event.start_time + timedelta(hours=2)).strftime("%Y%m%dT%H%M%SZ"),
+                start_time=event.start_time.strftime(time_fmt),
+                end_time=(event.start_time + timedelta(hours=2)).strftime(time_fmt),
                 details=event.description.strip(),
                 location=event.location_name.strip())
 
-    return event_url.strip().replace(' ', '+')
+
+    return event_url.replace(' ', '+')
 
 
 def create_ics_output(event):

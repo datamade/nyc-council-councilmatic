@@ -1,7 +1,7 @@
 [
     {
         "model": "councilmatic_core.event",
-        "pk": 1,
+        "pk": "ocd-event/02481351-47b5-46c5-9401-b7ad1fc49a0b",
         "fields": {
             "ocd_id": "ocd-event/02481351-47b5-46c5-9401-b7ad1fc49a0b",
             "ocd_created_at": "2017-05-27 11:10:46.574-05", 
