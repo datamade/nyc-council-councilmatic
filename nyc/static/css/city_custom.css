@@ -90,3 +90,16 @@
   background-color: #2f56a6;
   color: #fff; 
 }
+
+.inline-icon.large, .social-buttons img.large {
+    height: 36px;
+}
+
+.menu>li>a img {
+    vertical-align: middle;
+}
+
+.footer img {
+    margin-right: 0;
+    margin-left: 0; 
+}
