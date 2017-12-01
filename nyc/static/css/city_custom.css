@@ -51,3 +51,42 @@
     font-size: 16px;
 }
 
+/* Footer styles from council.nyc.gov */
+.footer {
+    text-align: left;
+    padding: 3em 0 4em;
+    background-color: #e6e6e6;
+}
+
+.footer ul {
+    -webkit-margin-before: 0em;
+    -webkit-margin-after: 0em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 0px;
+}
+
+.menu.simple li {
+    display: inline-block;
+    vertical-align: top;
+    line-height: 1;
+    margin-left: 0;
+    margin-right: 1rem;
+}
+
+.social-buttons a {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 0 1rem 0;
+  padding: 0.85em 1em;
+  -webkit-appearance: none;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  transition: background-color 0.25s ease-out, color 0.25s ease-out;
+  font-size: 0.9rem;
+  line-height: 1;
+  text-align: center;
+  cursor: pointer;
+  background-color: #2f56a6;
+  color: #fff; 
+}
