@@ -66,10 +66,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 p {
-  font-weight: 100;
+  font-weight: 400;
   font-size: 13px;    
   line-height: 1.6;
-  font-style: normal;
+/*  font-style: normal;*/
   text-rendering: optimizeLegibility;
   margin-bottom: 16px;
 }
