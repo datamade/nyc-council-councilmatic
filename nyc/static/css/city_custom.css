@@ -84,6 +84,96 @@ a:hover {
   text-decoration: none;
 }
 
+/* Navbar from council.nyc.gov */
+.navbar {
+  min-height: 87.1875px;
+}
+
+.navbar .container {
+  padding: 16px;
+}
+
+/* .navbar-brand is equivalent to .site-logo NYC site */
+.navbar-brand { 
+  text-transform: none; 
+  font-family: Georgia,Cambria,"Times New Roman",Times,serif;
+  font-weight: 400;
+  font-size: 22px;
+}
+
+.navbar-brand a {
+  padding: 16px;
+  line-height: 58px;
+  display: inline-block;
+}
+
+.navbar-brand img {
+  display: inline-block;
+  margin-right: 11px;
+}
+
+#logo {
+  height: 44px;
+}
+
+.navbar-default .navbar-brand {
+  color: #2f56a6;
+}
+
+.navbar-default .navbar-brand:hover {
+  color: #23417d;
+}
+
+.navbar-brand a {
+  line-height: 3.625rem;
+  display: inline-block;
+  padding: .9125rem 1rem;
+  margin-left: -1rem;
+}
+
+#nav-items li {
+  height: 58px;
+  font-size: 13px;
+}
+
+#nav-items > li > a, #nav-items > li > .dropdown > a {
+  color: #2f56a6;
+}
+
+#nav-items > li > a:hover, #nav-items > li > .dropdown > a:hover {
+  color: #23417d;
+}
+
+/*.site-logo {
+  display: block;
+  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  font-weight: normal;
+  font-size: 0.875rem;
+  line-height: 2.25rem;
+  letter-spacing: -0.03rem; }
+  @media print, screen and (min-width: 40em) {
+    .site-logo {
+      font-size: 1.125rem;
+      letter-spacing: 0; } }
+  @media screen and (min-width: 75em) {
+    .site-logo {
+      font-size: 1.375rem; } }
+  .site-logo a {
+    display: inline-block;
+    padding: 0.9125rem 1rem;
+    margin-left: -1rem; }
+    @media screen and (min-width: 64em) {
+      .site-logo a {
+        line-height: 3.625rem; } }
+  .site-logo img {
+    display: inline-block;
+    height: 2em;
+    max-width: none;
+    vertical-align: middle;
+    margin-top: -0.75em;
+    margin-right: 0.5em;
+    margin-bottom: -0.75em; }*/
+
 /* Footer styles from council.nyc.gov */
 .footer {
   text-align: left;

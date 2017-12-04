@@ -87,7 +87,7 @@ SEARCH_PLACEHOLDER_TEXT = "Taxi, Resolution 815-2015, etc."
 
 # these should live in APP_NAME/static/
 IMAGES = {
-    'logo': 'images/logo.png',
+    'logo': 'images/nyc-seal-blue.png',
 }
 # you can generate icons from the logo at http://www.favicomatic.com/
 # & put them in APP_NAME/static/images/icons/
