@@ -28,27 +28,24 @@
         <!-- <div class="container container-fluid container-fluid-nav"> -->
         <div class="container">
             <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
 
-              <a class="navbar-brand" href="/">
-                <img id="logo" src="{% static IMAGES.logo %}" >
-                <span id="logo-text">{{ CITY_NAME }} Councilmatic</span>
+                <a class="navbar-brand" href="/">
+                    <img id="logo" src="{% static IMAGES.logo %}" >
+                    <span id="logo-text">{{ CITY_NAME }} Councilmatic</span>
                 </a>
             </div>
 
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul id="nav-items">
-                    <!-- <li>
-                        <a href="{% url 'nyc:about' %}">About</a>
-                    </li> -->
                     <li>
-                        <a href="https://council.nyc.gov/">Back to council.nyc.gov</a>
+                        <a href="{% url 'nyc:about' %}">About</a>
                     </li>
                     <li>
                         <a href='{% url 'council_members' %}'>{{ CITY_VOCAB.COUNCIL_MEMBERS }}</a>
@@ -82,7 +79,6 @@
                                 </li>
                                 <li>
                                     <a href="/logout/">
-                                        <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>
                                         Sign out
                                     </a>
                                 </li>
@@ -94,10 +90,13 @@
                     {% if USING_NOTIFICATIONS and not request.user.is_authenticated %}
                     <li>
                         <a href="/login/" title="Sign in">
-                            <i class="fa fa-sign-in" aria-hidden="true"></i>
+                            Sign in
                         </a>
                     </li>
                     {% endif %}
+                    <li>
+                        <a href="https://council.nyc.gov/"><i class="fa fa-reply" aria-hidden="true"></i> Back to NYC Council</a>
+                    </li>
                     {% endnocache %}
 
 
