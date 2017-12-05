@@ -71,6 +71,8 @@ body {
 body {
     color: #222;
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; 
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
