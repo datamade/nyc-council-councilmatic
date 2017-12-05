@@ -10,7 +10,7 @@ CITY_COUNCIL_NAME = 'New York City Council'
 OCD_JURISDICTION_ID = 'ocd-jurisdiction/country:us/state:ny/place:new_york/government'
 OCD_CITY_COUNCIL_ID = 'ocd-organization/0f63aae8-16fd-4d3c-b525-00747a482cf9'
 
-LEGISLATIVE_SESSIONS = ['2014'] # the last one in this list should be the current legislative session
+LEGISLATIVE_SESSIONS = ['1994', '1998', '2002', '2004', '2006', '2010', '2014'] # the last one in this list should be the current legislative session
 
 APP_NAME = 'nyc'
 
@@ -87,7 +87,7 @@ SEARCH_PLACEHOLDER_TEXT = "Taxi, Resolution 815-2015, etc."
 
 # these should live in APP_NAME/static/
 IMAGES = {
-    'logo': 'images/logo.png',
+    'logo': 'images/nyc-seal-blue.png',
 }
 # you can generate icons from the logo at http://www.favicomatic.com/
 # & put them in APP_NAME/static/images/icons/
@@ -100,7 +100,7 @@ CITY_COUNCIL_MEETING_NAME = 'City Council Stated Meeting'
 # this is the name of the role of committee chairs, e.g. 'CHAIRPERSON' or 'Chair'
 # as stored in legistar
 # if this is set, committees will display chairs
-COMMITTEE_CHAIR_TITLE = 'CHAIRPERSON'
+COMMITTEE_CHAIR_TITLE = 'Chairperson'
 
 # this is the anme of the role of committee members,
 # as stored in legistar

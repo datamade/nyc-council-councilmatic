@@ -1,4 +1,13 @@
+body {
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+}
+
 /* Home page */
+#section-photo h2 {
+    color: #fff;
+    padding-top: 1em;
+}
+
 #section-photo{
     background-image:
         linear-gradient(
@@ -41,6 +50,12 @@
     margin-top: 20px;
 }
 
+
+/* Council members */
+.container-fluid .row .col-sm-6 {
+    margin-top: 28px;
+}
+
 /* Labels, Buttons */
 .label-enacted{
     background-color: #22B24C;
@@ -51,3 +66,201 @@
     font-size: 16px;
 }
 
+/* General styles for integration with council.nyc.gov */
+/* These styles originate in the council.nyc.gov app.css stylesheet. However, Councilmatic uses the "computed" values in pixels, in place of rem values. */
+body {
+    color: #222;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; 
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+p {
+    font-weight: 400;
+    font-size: 13px;    
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+    margin-bottom: 16px;
+}
+
+a {
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; 
+    color: #2f56a6;
+}
+
+a:hover {
+    color: #23417d;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background-color: #2f56a6;
+    border-color: #2f56a6;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:active:focus {
+    background-color: #28498d;
+    border-color: #28498d;
+}
+
+.input-lg {
+    height: 55px;
+}
+
+/* 
+Navbar from council.nyc.gov. 
+N.B. .navbar-brand is nearly equivalent to .site-logo NYC site 
+*/
+.navbar {
+    min-height: 87.1875px;
+    box-shadow: 0 4px 0 rgba(0,0,0,.1), 0 4px 0 rgba(0,0,0,.1);
+    border: none;
+}
+
+.navbar > .container .navbar-brand {
+    text-transform: none; 
+    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+    font-weight: 400;
+    font-size: 22px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.navbar-brand a {
+    padding: 16px;
+    line-height: 58px;
+    display: inline-block;
+}
+
+.navbar-brand img {
+    display: inline-block;
+    margin-right: 11px;
+}
+
+#logo { height: 44px; }
+
+.navbar-default .navbar-brand { color: #2f56a6; }
+
+.navbar-default .navbar-brand:hover {
+    color: #23417d;
+    background-color: transparent;
+}
+
+#nav-items li {
+    height: 58px;
+    font-size: 13px;
+}
+
+#nav-items > li > a {
+    line-height: 58px;
+    padding-top: 17px;
+    padding-bottom: 17px;
+}
+
+#nav-items > li > a, #nav-items > li > .dropdown > a {
+    color: #2f56a6;
+}
+
+#nav-items > li > a:hover, #nav-items > li > .dropdown > a:hover {
+  color: #23417d;
+  background-color: #f9f9f9;
+}
+
+/* Hamburger icon */
+.navbar-default .navbar-toggle {
+    border: none;
+    padding-right: 9px;
+}
+
+.navbar-toggle { margin-right: 0; }
+
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus { background-color: transparent; }
+
+.navbar-default .navbar-toggle .icon-bar { 
+    background-color: #222; 
+    border-radius: 0;
+    margin-bottom: 5px;
+    width: 20px;
+}
+
+/* Footer styles from council.nyc.gov */
+.footer {
+  text-align: left;
+  padding: 48px 0 64px;
+  background-color: #e6e6e6;
+  text-rendering: optimizeLegibility;
+  /* Line across the top */
+  box-shadow: inset 0 4px 0 #CFCFCF;
+  border-top: 0;
+}
+
+.footer h4 {
+  text-rendering: optimizeLegibility;
+  font-weight: 400;
+}
+
+/* Footer social media buttons */
+.footer ul {
+    -webkit-margin-before: 0em;
+    -webkit-margin-after: 0em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 0px;
+}
+
+.menu.simple li {
+    display: inline-block;
+    vertical-align: top;
+    line-height: 1;
+    margin-left: 0;
+    margin-right: 16px;
+}
+
+.social-buttons a {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0 16px 0;
+    -webkit-appearance: none;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    transition: background-color 0.25s ease-out, color 0.25s ease-out;
+    font-size: 13px;
+    line-height: 1;
+    text-align: center;
+    cursor: pointer;
+    background-color: #2f56a6;
+    color: #fff; 
+}
+
+.inline-icon.large, .social-buttons img.large { height: 36px; }
+
+.menu>li>a img { vertical-align: middle; }
+
+.footer img { margin: 6px; }
+
+
+@media only screen and (max-width : 767px) {
+    .navbar > .container .navbar-brand {
+      font-size: 14px;
+      letter-spacing: 0; 
+      width: 50%;
+    } 
+    .navbar {
+      min-height: 65.1875px;
+    }
+    .navbar-brand img {
+        margin-right: 4px;
+    }
+    #nav-items li {
+        float: none;
+    }
+    #nav-items > li > a {
+        font-size: 13px;
+    }
+    #logo {
+        height: 28px;
+        top: -4px;
+    }
+}

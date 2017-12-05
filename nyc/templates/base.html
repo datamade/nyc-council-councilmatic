@@ -10,7 +10,8 @@
     {% include 'partials/icons.html' %}
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.journal.min.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/dataTables.bootstrap.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
@@ -24,69 +25,82 @@
     {% cache 600 nav_wrapper 'nav' %}
 
     <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid container-fluid-nav">
-            <div id="nav-title">
-                <a class="navbar-brand" href="/">
-                    <img id="logo" src="{% static IMAGES.logo %}"></img>
-                    <span id="logo-text">{{ CITY_NAME_SHORT }} Councilmatic</span>
+        <!-- <div class="container container-fluid container-fluid-nav"> -->
+        <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="/">
+                <img id="logo" src="{% static IMAGES.logo %}" >
+                <span id="logo-text">{{ CITY_NAME }} Councilmatic</span>
                 </a>
             </div>
-            <ul id="nav-items">
-                <!-- <li>
-                    <a href="{% url 'nyc:about' %}">About</a>
-                </li> -->
-                <li>
-                    <a href='{% url 'council_members' %}'>{{ CITY_VOCAB.COUNCIL_MEMBERS }}</a>
-                </li>
-                <li>
-                    <a href='{% url 'nyc:committees' %}'>Committees</a>
-                </li>
-                <li>
-                    <a href='{% url 'events' %}'>{{ CITY_VOCAB.EVENTS }}</a>
-                </li>
-                <li>
-                    <a href="{% url 'nyc:search' %}">Legislation</a>
-                </li>
 
-                {% nocache %}
-                {% if USING_NOTIFICATIONS and request.user.is_authenticated %}
-                <li>
-                    <div class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" title="Account">
-                            <i class="fa fa-user" aria-hidden="true"></i>
-                            <span class="caret"></span>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                <ul id="nav-items">
+                    <!-- <li>
+                        <a href="{% url 'nyc:about' %}">About</a>
+                    </li> -->
+                    <li>
+                        <a href='{% url 'council_members' %}'>{{ CITY_VOCAB.COUNCIL_MEMBERS }}</a>
+                    </li>
+                    <li>
+                        <a href='{% url 'nyc:committees' %}'>Committees</a>
+                    </li>
+                    <li>
+                        <a href='{% url 'events' %}'>{{ CITY_VOCAB.EVENTS }}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'nyc:search' %}">Legislation</a>
+                    </li>
+
+                    {% nocache %}
+                    {% if USING_NOTIFICATIONS and request.user.is_authenticated %}
+                    <li>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" title="Account">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li class="non-link text-muted small">{{request.user.email}}</li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="/account/subscriptions">
+                                        <i class="fa fa-bullhorn fa-fw" aria-hidden="true"></i>
+                                        Manage Alerts
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/logout/">
+                                        <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>
+                                        Sign out
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    {% endif %}
+
+                    {% if USING_NOTIFICATIONS and not request.user.is_authenticated %}
+                    <li>
+                        <a href="/login/" title="Sign in">
+                            <i class="fa fa-sign-in" aria-hidden="true"></i>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-right">
-                            <li class="non-link text-muted small">{{request.user.email}}</li>
-                            <li role="separator" class="divider"></li>
-                            <li>
-                                <a href="/account/subscriptions">
-                                    <i class="fa fa-bullhorn fa-fw" aria-hidden="true"></i>
-                                    Manage Alerts
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/logout/">
-                                    <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>
-                                    Sign out
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                {% endif %}
-
-                {% if USING_NOTIFICATIONS and not request.user.is_authenticated %}
-                <li>
-                    <a href="/login/" title="Sign in">
-                        <i class="fa fa-sign-in" aria-hidden="true"></i>
-                    </a>
-                </li>
-                {% endif %}
-                {% endnocache %}
+                    </li>
+                    {% endif %}
+                    {% endnocache %}
 
 
-            </ul>
+                </ul>
+
+            </div><!-- /.navbar-collapse -->
 
         </div>
     </nav>
@@ -111,12 +125,33 @@
     {% endblock %}
 
     <div class="container-fluid footer">
-        <div class='col-sm-12'>
-            <br>
-            <div class='clearfix'></div>
-            <div>NYC Councilmatic | Site by <a href="https://datamade.us/" target="_blank">DataMade</a></div>
-            <br>
-        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <aside class="widget footer-widget">
+                    <h4 class="widget-title">We want to hear from you</h4>
+                    <p>With your insight, the Council discovers ways to improve the City we all call home. So we're meeting New Yorkers where they are—online and in person. Keep your feedback coming!</p>
+                    <p>You can reach us via social media, email, paper mail, or at your district office. For issues specific to a neighborhood, it's best to contact the <a href="/districts/">Council Member</a> representing that community.</p>
+                    <ul class="menu simple social-buttons">
+                        <li><a href="https://www.facebook.com/NYCCouncil"><img class="inline-icon large" src="/static/images/icons/social-icon-facebook.png"></a></li>
+                        <li><a href="https://twitter.com/NYCCouncil"><img class="inline-icon large" src='/static/images/icons/social-icon-twitter.png'></a></li>
+                        <li><a href="https://instagram.com/NYCCouncil"><img class="inline-icon large" src="/static/images/icons/social-icon-instagram.png"></a></li>
+                        <li><a href="https://plus.google.com/u/0/104432794073374421060/posts"><img class="inline-icon large" src="/static/images/icons/social-icon-googleplus.png"></a></li>
+                    </ul>
+                    </aside>
+                </div>
+                <div class="col-md-5">
+                    <aside class="widget footer-widget">
+                    <h4 class="widget-title">Visit the Council</h4>
+                    <p>We're located at <a href="https://www.google.com/maps/place/New+York+City+Hall/@40.7127744,-74.008253,17z/data=!3m1!4b1!4m2!3m1!1s0x89c258fda88cefb3:0x7f1e88758d210007"><strong>New York City Hall</strong> (map)</a>. Council Members each have an office at <a href="https://www.google.com/maps/place/250+Broadway,+New+York,+NY+10007/@40.7129838,-74.010099,17z/data=!4m7!1m4!3m3!1s0x89c258828f59541d:0x539864ce22092177!2s250+Broadway,+New+York,+NY+10007!3b1!3m1!1s0x89c258828f59541d:0x539864ce22092177"><strong>250 Broadway</strong> (map)</a>, as well as offices in each of their districts.</p>
+                    </aside>
+                    <aside class="widget footer-widget">
+                    <h4 class="widget-title"> Job opportunities</h4>
+                    <p> The New York City Council is an Equal Opportunity Employer. Please explore our <a href="/jobs/">Job Opportunities</a>.</p>
+                    </aside>
+                </div>
+            </div>
+        </div>      
     </div>
 
     <script src="{% static 'js/jquery-1.10.1.min.js' %}"></script>
