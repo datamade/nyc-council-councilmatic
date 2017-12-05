@@ -1,5 +1,5 @@
 body {
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
 }
 
 /* Home page */
@@ -55,99 +55,101 @@ body {
     font-size: 16px;
 }
 
-/* General styles from council.nyc.gov */
+/* General styles for integration with council.nyc.gov */
+/* These styles originate in the council.nyc.gov app.css stylesheet. However, Councilmatic uses the "computed" values in pixels, in place of rem values. */
 body {
-  color: #222;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; 
+    color: #222;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; 
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
 p {
-  font-weight: 400;
-  font-size: 13px;    
-  line-height: 1.6;
-/*  font-style: normal;*/
-  text-rendering: optimizeLegibility;
-  margin-bottom: 16px;
+    font-weight: 400;
+    font-size: 13px;    
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+    margin-bottom: 16px;
 }
 
 a {
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; 
-  color: #2f56a6;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; 
+    color: #2f56a6;
 }
 
 a:hover {
-  color: #23417d;
-  text-decoration: none;
+    color: #23417d;
+    text-decoration: none;
 }
 
-/* Navbar from council.nyc.gov */
+.btn-primary {
+    background-color: #2f56a6;
+    border-color: #2f56a6;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:active:focus {
+    background-color: #28498d;
+    border-color: #28498d;
+}
+
+.input-lg {
+    height: 55px;
+}
+
+/* 
+Navbar from council.nyc.gov. 
+N.B. .navbar-brand is nearly equivalent to .site-logo NYC site 
+*/
 .navbar {
-  min-height: 87.1875px;
-  box-shadow: 0 4px 0 rgba(0,0,0,.1), 0 4px 0 rgba(0,0,0,.1);
-  border: none;
+    min-height: 87.1875px;
+    box-shadow: 0 4px 0 rgba(0,0,0,.1), 0 4px 0 rgba(0,0,0,.1);
+    border: none;
 }
 
 .navbar > .container .navbar-brand {
-  margin-top: 16px;
-  margin-bottom: 16px;
-}
-
-/* .navbar-brand is equivalent to .site-logo NYC site */
-.navbar-brand { 
-  text-transform: none; 
-  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-  font-weight: 400;
-  font-size: 22px;
+    text-transform: none; 
+    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+    font-weight: 400;
+    font-size: 22px;
+    margin-top: 16px;
+    margin-bottom: 16px;
 }
 
 .navbar-brand a {
-  padding: 16px;
-  line-height: 58px;
-  display: inline-block;
+    padding: 16px;
+    line-height: 58px;
+    display: inline-block;
 }
 
 .navbar-brand img {
-  display: inline-block;
-  margin-right: 11px;
+    display: inline-block;
+    margin-right: 11px;
 }
 
-#logo {
-  height: 44px;
-}
+#logo { height: 44px; }
 
-.navbar-default .navbar-brand {
-  color: #2f56a6;
-}
+.navbar-default .navbar-brand { color: #2f56a6; }
 
 .navbar-default .navbar-brand:hover {
-  color: #23417d;
-  background-color: transparent;
-}
-
-.navbar-brand a {
-  line-height: 3.625rem;
-  display: inline-block;
-  padding: .9125rem 1rem;
-  margin-left: -1rem;
+    color: #23417d;
+    background-color: transparent;
 }
 
 #nav-items li {
-  height: 58px;
-  font-size: 13px;
-}
-
-#nav-items > li > a, #nav-items > li > .dropdown > a {
-  color: #2f56a6;
+    height: 58px;
+    font-size: 13px;
 }
 
 #nav-items > li > a {
     line-height: 58px;
     padding-top: 17px;
     padding-bottom: 17px;
+}
+
+#nav-items > li > a, #nav-items > li > .dropdown > a {
+    color: #2f56a6;
 }
 
 #nav-items > li > a:hover, #nav-items > li > .dropdown > a:hover {
@@ -158,11 +160,9 @@ a:hover {
 /* Footer styles from council.nyc.gov */
 .footer {
   text-align: left;
-  /*padding: 3rem 0 4rem;*/
   padding: 48px 0 64px;
   background-color: #e6e6e6;
   text-rendering: optimizeLegibility;
-
   /* Line across the top */
   box-shadow: inset 0 4px 0 #CFCFCF;
   border-top: 0;
@@ -170,52 +170,44 @@ a:hover {
 
 .footer h4 {
   text-rendering: optimizeLegibility;
-  font-weight: 100;
+  font-weight: 400;
 }
 
 /* Footer social media buttons */
 .footer ul {
-  -webkit-margin-before: 0em;
-  -webkit-margin-after: 0em;
-  -webkit-margin-start: 0px;
-  -webkit-margin-end: 0px;
-  -webkit-padding-start: 0px;
+    -webkit-margin-before: 0em;
+    -webkit-margin-after: 0em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 0px;
 }
 
 .menu.simple li {
-  display: inline-block;
-  vertical-align: top;
-  line-height: 1;
-  margin-left: 0;
-  margin-right: 1rem;
+    display: inline-block;
+    vertical-align: top;
+    line-height: 1;
+    margin-left: 0;
+    margin-right: 16px;
 }
 
 .social-buttons a {
-  display: inline-block;
-  vertical-align: middle;
-  margin: 0 0 1rem 0;
-  padding: 0.85em 1em;
-  -webkit-appearance: none;
-  border: 1px solid transparent;
-  border-radius: 50%;
-  transition: background-color 0.25s ease-out, color 0.25s ease-out;
-  font-size: 0.9rem;
-  line-height: 1;
-  text-align: center;
-  cursor: pointer;
-  background-color: #2f56a6;
-  color: #fff; 
-}
-
-.inline-icon.large, .social-buttons img.large {
-    height: 36px;
-}
-
-.menu>li>a img {
+    display: inline-block;
     vertical-align: middle;
+    margin: 0 0 16px 0;
+    -webkit-appearance: none;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    transition: background-color 0.25s ease-out, color 0.25s ease-out;
+    font-size: 13px;
+    line-height: 1;
+    text-align: center;
+    cursor: pointer;
+    background-color: #2f56a6;
+    color: #fff; 
 }
 
-.footer img {
-    margin-right: 0;
-    margin-left: 0; 
-}
+.inline-icon.large, .social-buttons img.large { height: 36px; }
+
+.menu>li>a img { vertical-align: middle; }
+
+.footer img { margin: 6px; }
