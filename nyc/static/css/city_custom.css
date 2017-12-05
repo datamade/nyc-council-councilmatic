@@ -253,6 +253,12 @@ N.B. .navbar-brand is nearly equivalent to .site-logo NYC site
     .navbar-brand img {
         margin-right: 4px;
     }
+    #nav-items li {
+        float: none;
+    }
+    #nav-items > li > a {
+        font-size: 13px;
+    }
     #logo {
         height: 28px;
         top: -4px;
