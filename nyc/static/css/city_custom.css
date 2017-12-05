@@ -3,6 +3,11 @@ body {
 }
 
 /* Home page */
+#section-photo h2 {
+    color: #fff;
+    padding-top: 1em;
+}
+
 #section-photo{
     background-image:
         linear-gradient(
@@ -43,6 +48,12 @@ body {
 
 .alert-signup {
     margin-top: 20px;
+}
+
+
+/* Council members */
+.container-fluid .row .col-sm-6 {
+    margin-top: 28px;
 }
 
 /* Labels, Buttons */
@@ -157,6 +168,23 @@ N.B. .navbar-brand is nearly equivalent to .site-logo NYC site
   background-color: #f9f9f9;
 }
 
+/* Hamburger icon */
+.navbar-default .navbar-toggle {
+    border: none;
+    padding-right: 9px;
+}
+
+.navbar-toggle { margin-right: 0; }
+
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus { background-color: transparent; }
+
+.navbar-default .navbar-toggle .icon-bar { 
+    background-color: #222; 
+    border-radius: 0;
+    margin-bottom: 5px;
+    width: 20px;
+}
+
 /* Footer styles from council.nyc.gov */
 .footer {
   text-align: left;
@@ -211,3 +239,22 @@ N.B. .navbar-brand is nearly equivalent to .site-logo NYC site
 .menu>li>a img { vertical-align: middle; }
 
 .footer img { margin: 6px; }
+
+
+@media only screen and (max-width : 767px) {
+    .navbar > .container .navbar-brand {
+      font-size: 14px;
+      letter-spacing: 0; 
+      width: 50%;
+    } 
+    .navbar {
+      min-height: 65.1875px;
+    }
+    .navbar-brand img {
+        margin-right: 4px;
+    }
+    #logo {
+        height: 28px;
+        top: -4px;
+    }
+}

@@ -25,71 +25,82 @@
     {% cache 600 nav_wrapper 'nav' %}
 
     <nav class="navbar navbar-default navbar-fixed-top">
-        <!-- <div class="container-fluid container-fluid-nav"> -->
+        <!-- <div class="container container-fluid container-fluid-nav"> -->
         <div class="container">
-            <div id="nav-title">
-                <a class="navbar-brand" href="/">
-                    <img id="logo" src="{% static IMAGES.logo %}" >
-                    <span id="logo-text">{{ CITY_NAME }} Councilmatic</span>
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="/">
+                <img id="logo" src="{% static IMAGES.logo %}" >
+                <span id="logo-text">{{ CITY_NAME }} Councilmatic</span>
                 </a>
             </div>
 
-            <ul id="nav-items">
-                <!-- <li>
-                    <a href="{% url 'nyc:about' %}">About</a>
-                </li> -->
-                <li>
-                    <a href='{% url 'council_members' %}'>{{ CITY_VOCAB.COUNCIL_MEMBERS }}</a>
-                </li>
-                <li>
-                    <a href='{% url 'nyc:committees' %}'>Committees</a>
-                </li>
-                <li>
-                    <a href='{% url 'events' %}'>{{ CITY_VOCAB.EVENTS }}</a>
-                </li>
-                <li>
-                    <a href="{% url 'nyc:search' %}">Legislation</a>
-                </li>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
-                {% nocache %}
-                {% if USING_NOTIFICATIONS and request.user.is_authenticated %}
-                <li>
-                    <div class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" title="Account">
-                            <i class="fa fa-user" aria-hidden="true"></i>
-                            <span class="caret"></span>
+                <ul id="nav-items">
+                    <!-- <li>
+                        <a href="{% url 'nyc:about' %}">About</a>
+                    </li> -->
+                    <li>
+                        <a href='{% url 'council_members' %}'>{{ CITY_VOCAB.COUNCIL_MEMBERS }}</a>
+                    </li>
+                    <li>
+                        <a href='{% url 'nyc:committees' %}'>Committees</a>
+                    </li>
+                    <li>
+                        <a href='{% url 'events' %}'>{{ CITY_VOCAB.EVENTS }}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'nyc:search' %}">Legislation</a>
+                    </li>
+
+                    {% nocache %}
+                    {% if USING_NOTIFICATIONS and request.user.is_authenticated %}
+                    <li>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" title="Account">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li class="non-link text-muted small">{{request.user.email}}</li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="/account/subscriptions">
+                                        <i class="fa fa-bullhorn fa-fw" aria-hidden="true"></i>
+                                        Manage Alerts
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/logout/">
+                                        <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>
+                                        Sign out
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    {% endif %}
+
+                    {% if USING_NOTIFICATIONS and not request.user.is_authenticated %}
+                    <li>
+                        <a href="/login/" title="Sign in">
+                            <i class="fa fa-sign-in" aria-hidden="true"></i>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-right">
-                            <li class="non-link text-muted small">{{request.user.email}}</li>
-                            <li role="separator" class="divider"></li>
-                            <li>
-                                <a href="/account/subscriptions">
-                                    <i class="fa fa-bullhorn fa-fw" aria-hidden="true"></i>
-                                    Manage Alerts
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/logout/">
-                                    <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>
-                                    Sign out
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                {% endif %}
-
-                {% if USING_NOTIFICATIONS and not request.user.is_authenticated %}
-                <li>
-                    <a href="/login/" title="Sign in">
-                        <i class="fa fa-sign-in" aria-hidden="true"></i>
-                    </a>
-                </li>
-                {% endif %}
-                {% endnocache %}
+                    </li>
+                    {% endif %}
+                    {% endnocache %}
 
 
-            </ul>
+                </ul>
+
+            </div><!-- /.navbar-collapse -->
 
         </div>
     </nav>
