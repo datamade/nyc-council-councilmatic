@@ -55,7 +55,7 @@ BOUNDARY_SET = ['nyc-council-districts']
 MAP_CONFIG = {
     'center': [40.7127, -74.0059],
     'zoom': 10,
-    'color': "#3D8A8E", #teal
+    'color': "#2f56a6", # navy blue
     'highlight_color': "#EB6864", #salmon
 }
 
