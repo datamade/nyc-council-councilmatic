@@ -2,6 +2,12 @@ body {
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
 }
 
+:root {
+  --navy-blue-color: #2f56a6;
+  --govt-gray-color: #767676;
+  --salmon-color: #EB6864;
+}
+
 /* Home page */
 #section-photo h2 {
     color: #fff;
@@ -89,7 +95,7 @@ p {
 
 a {
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; 
-    color: #2f56a6;
+    color: var(--navy-blue-color);
 }
 
 a:hover {
@@ -97,9 +103,22 @@ a:hover {
     text-decoration: none;
 }
 
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li > a:hover {
+    color: var(--navy-blue-color);
+    border-bottom: 8px solid var(--navy-blue-color);
+}
+
+.nav-pills > li > a {
+    color: var(--navy-blue-color);
+}
+
+.btn {
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+}
+
 .btn-primary {
-    background-color: #2f56a6;
-    border-color: #2f56a6;
+    background-color: var(--navy-blue-color);
+    border-color: var(--navy-blue-color);
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:active:focus {
@@ -107,8 +126,56 @@ a:hover {
     border-color: #28498d;
 }
 
+.btn-info {
+    background-color: var(--salmon-color);
+    border-color: var(--salmon-color);
+}
+
+.btn-info:hover {
+    background-color: #e22620;
+    border-color: #e22620;
+}
+
+.btn-default {
+    background-color: var(--govt-gray-color);
+    border-color: var(--govt-gray-color);
+}
+
 .input-lg {
     height: 55px;
+}
+
+.badge-default {
+    background-color: var(--navy-blue-color);
+}
+
+.modal-body > p {
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+    font-size: 16px;
+    color: #222;
+}
+
+.alert-info {
+    background-color: #FDEDED;
+    color: var(--salmon-color);
+    border-color: #F8CAC9;
+}
+
+.alert-info a {
+    color: var(--salmon-color);
+    font-weight: bold;
+}
+
+.pagination>li>a, .pagination>li>span {
+    color: var(--navy-blue-color);
+}
+
+.pagination>li>a:hover {
+    color: #28498d;
+}
+
+.label-active {
+    background-color: var(--salmon-color);
 }
 
 /* 
@@ -143,7 +210,7 @@ N.B. .navbar-brand is nearly equivalent to .site-logo NYC site
 
 #logo { height: 44px; }
 
-.navbar-default .navbar-brand { color: #2f56a6; }
+.navbar-default .navbar-brand { color: var(--navy-blue-color); }
 
 .navbar-default .navbar-brand:hover {
     color: #23417d;
@@ -162,12 +229,20 @@ N.B. .navbar-brand is nearly equivalent to .site-logo NYC site
 }
 
 #nav-items > li > a, #nav-items > li > .dropdown > a {
-    color: #2f56a6;
+    color: var(--navy-blue-color);
 }
 
 #nav-items > li > a:hover, #nav-items > li > .dropdown > a:hover {
   color: #23417d;
   background-color: #f9f9f9;
+}
+
+/* Preview for widget */
+
+#widget-nav .navbar-brand {
+    text-transform: none; 
+    font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+    font-weight: 400;
 }
 
 /* Hamburger icon */
@@ -232,7 +307,7 @@ N.B. .navbar-brand is nearly equivalent to .site-logo NYC site
     line-height: 1;
     text-align: center;
     cursor: pointer;
-    background-color: #2f56a6;
+    background-color: var(--navy-blue-color);
     color: #fff; 
 }
 
