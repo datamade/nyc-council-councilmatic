@@ -1,5 +1,5 @@
 psycopg2==2.6.2
-django-councilmatic==0.8.3
+django-councilmatic==0.8.7
 django-councilmatic-notifications<0.2
 pysolr===3.6.0
 django-haystack==2.6.1

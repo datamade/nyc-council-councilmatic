@@ -53,7 +53,12 @@ body {
 }
 
 .alert-signup {
-    margin-top: 20px;
+    margin-top: 5%;
+}
+
+p.search-result, .search-result > a {
+    font-size: 16px;
+    margin: 0 0 8px;
 }
 
 
@@ -178,6 +183,11 @@ a:hover {
     background-color: var(--salmon-color);
 }
 
+/* Notifications */
+.well.col-md-6.col-md-offset-3 {
+    margin-top: 32px;
+}
+
 /* 
 Navbar from council.nyc.gov. 
 N.B. .navbar-brand is nearly equivalent to .site-logo NYC site 
@@ -222,7 +232,13 @@ N.B. .navbar-brand is nearly equivalent to .site-logo NYC site
     font-size: 13px;
 }
 
-#nav-items > li > a {
+#nav-items ul.dropdown-menu li {
+    height: 24px;
+}
+
+#nav-items ul.dropdown-menu .divider { height: 1px; }
+
+#nav-items > li > a, #nav-items > li > .dropdown > a {
     line-height: 58px;
     padding-top: 17px;
     padding-bottom: 17px;
@@ -235,6 +251,10 @@ N.B. .navbar-brand is nearly equivalent to .site-logo NYC site
 #nav-items > li > a:hover, #nav-items > li > .dropdown > a:hover {
   color: #23417d;
   background-color: #f9f9f9;
+}
+
+.dropdown-menu > li.non-link {
+    padding: 3px 20px;
 }
 
 /* Preview for widget */
