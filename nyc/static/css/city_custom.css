@@ -242,7 +242,6 @@ N.B. .navbar-brand is nearly equivalent to .site-logo NYC site
 }
 
 /* Preview for widget */
-
 #widget-nav .navbar-brand {
     text-transform: none; 
     font-family: Georgia, Cambria, "Times New Roman", Times, serif;
