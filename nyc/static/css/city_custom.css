@@ -13,8 +13,8 @@
 #section-photo{
     background-image:
         linear-gradient(
-          rgba(0, 0, 0, 0.3),
-          rgba(0, 0, 0, 0.3)
+        rgba(0, 0, 0, 0.85),
+        rgba(160, 160, 160, 0.1)
         ),
         url('../images/nyc-hall-cropped.png');
     background-size: cover;
@@ -323,6 +323,9 @@ N.B. .navbar-brand is nearly equivalent to .site-logo NYC site
 
 
 @media only screen and (max-width : 767px) {
+    body {
+        padding-top: 40px;
+    }
     .navbar > .container .navbar-brand {
       font-size: 14px;
       letter-spacing: 0; 
