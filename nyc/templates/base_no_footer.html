@@ -65,7 +65,7 @@
                     <li>
                         <div class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" title="Account">
-                                <i class="fa fa-user" aria-hidden="true"></i>
+                                {{request.user.username}}
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
@@ -79,7 +79,7 @@
                                 </li>
                                 <li>
                                     <a href="/logout/">
-                                        Sign out
+                                        <i class="fa fa-sign-out" aria-hidden="true"></i> Sign out
                                     </a>
                                 </li>
                             </ul>
