@@ -202,6 +202,7 @@ class NYCCouncilmaticFacetedSearchView(CouncilmaticFacetedSearchView):
                       .facet('sponsorships', sort='index')\
                       .facet('controlling_body')\
                       .facet('inferred_status')\
+                      .facet('legislative_session', sort='index')\
                       .highlight()
 
         if form_kwargs:
