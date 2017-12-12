@@ -104,7 +104,7 @@ COMMITTEE_CHAIR_TITLE = 'Chairperson'
 
 # this is the anme of the role of committee members,
 # as stored in legistar
-COMMITTEE_MEMBER_TITLE = 'Committee Member'
+COMMITTEE_MEMBER_TITLE = 'Member'
 
 
 
