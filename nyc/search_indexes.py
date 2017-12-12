@@ -34,3 +34,6 @@ class NYCBillIndex(BillIndex, indexes.Indexable):
             return index_actions
 
         return obj.last_action_date
+
+    def prepare_bill_type(self, obj):
+        return obj.bill_type
