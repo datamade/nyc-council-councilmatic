@@ -27,18 +27,6 @@ CITY_VOCAB = {
 #########################
 # The rest are optional #
 #########################
-
-# this is for populating meta tags
-SITE_META = {
-    'site_name' : 'NYC Councilmatic',
-    'site_desc' : 'New York City Council, demystified. Keep tabs on what your local representatives are up to.',
-    'site_author' : 'PPF & DataMade',
-    'site_url' : 'http://nyc.councilmatic.org',
-    'twitter_site': '@ppolitics',
-    'twitter_creator': '@DataMadeCo',
-}
-
-
 LEGISTAR_URL = 'http://legistar.council.nyc.gov/Legislation.aspx'
 
 
