@@ -4,7 +4,6 @@
 set -euo pipefail
 
 # NYC Council Councilmatic deploys on two different servers: staging and Councilmatic. For this reason, we need not differentiate between two repos. 
-rm -Rf /home/datamade/nyc-council-councilmatic
 mkdir -p /home/datamade/nyc-council-councilmatic
 
 # Decrypt blackbox-encrypted files 
