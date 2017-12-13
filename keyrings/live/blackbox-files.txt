@@ -1,4 +1,5 @@
 configs/nyc-council-production.conf.nginx
+configs/nyc-council-production.conf.supervisor
 configs/nyc-council-staging.conf.nginx
 configs/nyc-council-staging.conf.supervisor
 configs/settings_deployment_production.py
