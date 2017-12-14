@@ -12,6 +12,8 @@ from councilmatic_core.models import Action
 
 
 class NYCBillIndex(BillIndex, indexes.Indexable):
+    text = indexes.CharField(document=True, use_template=True,
+                             template_name="search/indexes/nyc/bill_text.txt")
 
     def get_model(self):
         return NYCBill
@@ -37,3 +39,6 @@ class NYCBillIndex(BillIndex, indexes.Indexable):
 
     def prepare_bill_type(self, obj):
         return obj.bill_type
+
+    def prepare_text(self, obj):
+        return self.text.prepare(obj)

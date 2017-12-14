@@ -1,4 +1,5 @@
 {% load extras %}
+{% load highlight %}
 
 <p class="search-result">
     <a class="small" href="{% url 'bill_detail' r.object.slug %}">{{ r.object.friendly_name }}</a>
@@ -6,10 +7,10 @@
 </p>
 
 <div class="row">
-    <div class="col-xs-11">
+    <div class="col-xs-11">        
         {% if query %}
             <p class="search-result">
-              {{ r.highlighted.text.0|safe  }}
+                {{ r.highlighted.text.0|safe  }}
             </p>
         {% else %}
             <p class="search-result">
