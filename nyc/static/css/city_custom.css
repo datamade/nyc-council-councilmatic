@@ -8,19 +8,20 @@
 #section-photo h2 {
     color: #fff;
     padding-top: 1em;
+    font-size: 36px;
 }
 
 #section-photo{
     background-image:
         linear-gradient(
-        rgba(0, 0, 0, 0.85),
+        rgba(0, 0, 0, 0.875),
         rgba(160, 160, 160, 0.1)
         ),
         url('../images/nyc-hall-cropped.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
-    height: 300px;
+    height: 320px;
 }
 
 .photo-credit{
@@ -31,11 +32,14 @@
 #section-events{
     background-color: #F8F8F8;
 }
-#featured-bills{
+#description-text{
     background-color: #F0F0F0;
     padding-top: 30px;
 }
-#featured-bills, #section-recently-passed, #section-events{
+#description-text p {
+    font-size: 20px;
+}
+#description-text, #section-recently-passed, #section-events{
     padding-bottom: 30px;
 }
 
@@ -88,6 +92,14 @@ a {
 a:hover {
     color: #23417d;
     text-decoration: none;
+}
+
+.pd-top-lg {
+    padding-top: 98px;
+}
+
+.no-margin {
+    margin-top: 0;
 }
 
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li > a:hover {
@@ -170,6 +182,12 @@ a:hover {
 p.search-result, .search-result > a {
     font-size: 16px;
     margin: 0 0 8px;
+}
+
+.text-preview {
+    font-family: "Times New Roman";
+    font-size:12pt;
+    color:#000000;
 }
 
 /* 
@@ -324,6 +342,9 @@ N.B. .navbar-brand is nearly equivalent to .site-logo NYC site
 @media only screen and (max-width : 767px) {
     body {
         padding-top: 40px;
+    }
+    #section-photo h2 {
+        font-size: 28px;
     }
     .navbar > .container .navbar-brand {
       font-size: 14px;
