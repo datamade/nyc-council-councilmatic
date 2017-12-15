@@ -94,6 +94,14 @@ a:hover {
     text-decoration: none;
 }
 
+.pd-top-lg {
+    padding-top: 98px;
+}
+
+.no-margin {
+    margin-top: 0;
+}
+
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li > a:hover {
     color: var(--navy-blue-color);
     border-bottom: 8px solid var(--navy-blue-color);
@@ -334,6 +342,9 @@ N.B. .navbar-brand is nearly equivalent to .site-logo NYC site
 @media only screen and (max-width : 767px) {
     body {
         padding-top: 40px;
+    }
+    #section-photo h2 {
+        font-size: 28px;
     }
     .navbar > .container .navbar-brand {
       font-size: 14px;
