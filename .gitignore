@@ -79,3 +79,5 @@ core/**
 /configs/nyc-council-staging.conf.nginx
 /configs/nyc-council-staging.conf.supervisor
 /scripts/nyc-council-staging-crontask
+/configs/nyc-council-production.conf.nginx
+/configs/nyc-council-production.conf.supervisor
