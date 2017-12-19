@@ -106,11 +106,11 @@ a:hover {
 }
 
 .pd-top-lg {
-    padding-top: 98px;
+    padding-top: 102px;
 }
 
-.no-margin {
-    margin-top: 0;
+.neg-margin {
+    margin-top: -76px;
 }
 
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li > a:hover {
