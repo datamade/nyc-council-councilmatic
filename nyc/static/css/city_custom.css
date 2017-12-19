@@ -201,6 +201,21 @@ p.search-result, .search-result > a {
     color:#000000;
 }
 
+.tooltip-inner {
+    background-color: var(--govt-gray-color);
+    color: #fff;
+    font-family: "Open Sans", sans-serif;
+}
+
+.tooltip.in {
+  opacity: 0.98;
+  filter: alpha(opacity=100);
+}
+
+.tooltip.top .tooltip-arrow {
+    border-top-color: var(--govt-gray-color);
+}
+
 /* 
 Navbar from council.nyc.gov. 
 N.B. .navbar-brand is nearly equivalent to .site-logo NYC site 
