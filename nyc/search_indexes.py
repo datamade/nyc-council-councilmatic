@@ -31,11 +31,12 @@ class NYCBillIndex(BillIndex, indexes.Indexable):
 
             if index_actions:
                 # Newer versions of Solr seem to be fussy about the time format, and we do not need the time, just the date stamp.
+                # https://lucene.apache.org/solr/guide/7_1/working-with-dates.html#date-formatting
                 index_actions = max(index_actions).date()
 
             return index_actions
 
-        return obj.last_action_date
+        return obj.last_action_date.date()
 
     def prepare_bill_type(self, obj):
         return obj.bill_type
