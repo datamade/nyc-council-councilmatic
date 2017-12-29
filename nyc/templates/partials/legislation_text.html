@@ -1,15 +1,17 @@
 {% load extras %}
 {% load nyc_extras %}
 
+
 {% if legislation.ocr_full_text and legislation.ocr_full_text|clean_html|length > 65 %}
     <h3>
         <i class='fa fa-fw fa-file-text-o'></i>
         Legislation text
     </h3>
-    <div class='panel panel-default'>
+    <div class='panel panel-default leg-full-text'>
         <div class='panel-body'>
-            {{ legislation.ocr_full_text|clean_plain_text|safe }}
+            {{ legislation.full_text | show_this | safe}}
         </div>
     </div>
     <div class="divider"></div>
+    
 {% endif %}

@@ -16,3 +16,13 @@ def clean_plain_text(text):
 
 def is_text(text):
   return (text) and ('..' not in text) and (text != '2')
+
+
+@register.filter
+@stringfilter
+def show_this(text):
+  # Compress HTML to searchable string without multi-lines.
+  no_multiline = re.sub(r"([\n ])\1*", ' ', text)
+
+  # Remove extra </div> tags and other extraneous text.
+  return no_multiline.replace('</div> <br> </div>', '</div> <br>').replace('..Title', '').replace('..Body', '')
