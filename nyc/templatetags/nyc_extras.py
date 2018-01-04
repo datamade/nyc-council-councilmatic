@@ -5,24 +5,4 @@ import re
 
 register = template.Library()
 
-@register.filter
-@stringfilter
-def clean_plain_text(text):
-    paragraphs = text.replace('�', '§').split('\n')
-
-    text = ''.join('<p class="text-preview">{}</span></p>'.format(p.strip()) for p in paragraphs if is_text(p.strip()))
-
-    return text
-
-def is_text(text):
-  return (text) and ('..' not in text) and (text != '2')
-
-
-@register.filter
-@stringfilter
-def show_this(text):
-  # Compress HTML to searchable string without multi-lines.
-  no_multiline = re.sub(r"([\n ])\1*", ' ', text)
-
-  # Remove extra </div> tags and other extraneous text.
-  return no_multiline.replace('</div> <br> </div>', '</div> <br>').replace('..Title', '').replace('..Body', '')
+# Add custom filters here. Use these decorators: @register.filter, @stringfilter.
