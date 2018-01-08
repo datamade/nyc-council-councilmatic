@@ -1,4 +1,5 @@
 {% load extras %}
+{% load nyc_extras %}
 
 {% if legislation.html_text %}
     <h3>
@@ -8,6 +9,17 @@
     <div class='panel panel-default'>
         <div class='panel-body'>
             {{ legislation.html_text | safe}}
+        </div>
+    </div>
+    <div class="divider"></div>
+{% elif legislation.ocr_full_text %}
+    <h3>
+        <i class='fa fa-fw fa-file-text-o'></i>
+        Legislation text
+    </h3>
+    <div class='panel panel-default'>
+        <div class='panel-body'>
+            {{ legislation.ocr_full_text | clean_plain_text | safe}}
         </div>
     </div>
     <div class="divider"></div>
