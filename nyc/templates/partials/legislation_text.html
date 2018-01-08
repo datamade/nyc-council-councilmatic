@@ -1,13 +1,13 @@
 {% load extras %}
 
-{% if legislation.full_text %}
+{% if legislation.html_text %}
     <h3>
         <i class='fa fa-fw fa-file-text-o'></i>
         Legislation text
     </h3>
     <div class='panel panel-default leg-full-text'>
         <div class='panel-body'>
-            {{ legislation.full_text | safe}}
+            {{ legislation.html_text | safe}}
         </div>
     </div>
     <div class="divider"></div>
