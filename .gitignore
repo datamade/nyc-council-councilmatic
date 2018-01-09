@@ -65,6 +65,7 @@ settings_deployment.py
 # Collected Static Files
 static/**
 core/**
+**/static/images/ocd-person/*.jpg
 /keyrings/live/pubring.gpg~
 /keyrings/live/pubring.kbx~
 /keyrings/live/secring.gpg
