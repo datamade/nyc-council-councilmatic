@@ -1,3 +1,2 @@
 # /etc/cron.d/nyc-council-councilmatic-staging-crontasks
-0 0 * * * datamade cd /home/datamade/nyc-council-councilmatic && /home/datamade/.virtualenvs/nyc-council-councilmatic/bin/python manage.py import_data >> /tmp/nyc-council-councilmatic-loaddata.log 2>&1
-0 0 * * * datamade cd /home/datamade/nyc-council-councilmatic && /home/datamade/.virtualenvs/nyc-council-councilmatic/bin/python manage.py convert_rtf >> /tmp/convert_rtf.log 2>&1
+0 0 * * * datamade cd /home/datamade/nyc-council-councilmatic && /home/datamade/.virtualenvs/nyc-council-councilmatic/bin/python manage.py import_data >> /tmp/nyc-council-councilmatic-loaddata.log 2>&1 && /home/datamade/.virtualenvs/nyc-council-councilmatic/bin/python manage.py convert_rtf >> /tmp/convert_rtf.log 2>&1
