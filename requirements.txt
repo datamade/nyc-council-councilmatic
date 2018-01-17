@@ -1,5 +1,5 @@
 psycopg2==2.6.2
-https://github.com/datamade/django-councilmatic/zipball/rtf-convert
+https://github.com/datamade/django-councilmatic/zipball/master
 django-councilmatic-notifications<0.2
 pysolr===3.6.0
 django-haystack==2.6.1

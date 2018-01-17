@@ -227,6 +227,16 @@ You can stop the container (if running as a daemon process), whenever you please
 docker-compose stop nyccouncilmatic_solr
 ```
 
+## Solr down?
+
+Is solr down on the server? If so, shell into the councilmatic server, and run:
+
+```
+sudo -u solr ./solr start -p 8984
+```
+
+(Specify the port. Otherwise, solr will try to run on 8983.)
+
 ## A note on caching
 
 Councilmatic uses template fragment caching, made easy with the [django-adv-cache-tag](http://documentup.com/twidi/django-adv-cache-tag) library. Instances of Councilmatic with [notifications](https://github.com/datamade/django-councilmatic-notifications) contain dynamically generated elements that change with each user. We do not cache such elements, but we do cache the content around them. The cached material (cache keys) expires in 600 seconds (ten minutes).
