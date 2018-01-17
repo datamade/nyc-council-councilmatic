@@ -10,7 +10,11 @@
     <div class="col-xs-11">        
         {% if query %}
             <p class="search-result">
-                {{ r.highlighted.text.0|safe }}
+                {% if r.highlighted.text.0 %}
+                    {{ r.highlighted.text.0|safe }}
+                {% else %}
+                    {% highlight r.description with query %}
+                {% endif %}
             </p>
         {% else %}
             <p class="search-result">
