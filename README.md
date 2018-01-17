@@ -229,9 +229,12 @@ docker-compose stop nyccouncilmatic_solr
 
 ## Solr down?
 
-Is solr down on the server? If so, shell into the councilmatic server, and run:
+Is solr down on the server? If so, shell into the councilmatic server, visit `/opt/solr-7.1.0/bin`, and run:
 
 ```
+# staging
+sudo -u solr ./solr start -p 8983
+# production
 sudo -u solr ./solr start -p 8984
 ```
 

@@ -1,4 +1,5 @@
 {% load extras %}
+{% load nyc_extras %}
 {{ object.identifier | alternative_identifiers }}
 {{ object.friendly_name }}
 {{ object.classification }}
@@ -14,5 +15,4 @@
 {% for t in object.topics %}
   {{t}}
 {% endfor %}
-{{ object.full_text|clean_html }}
-{{ object.ocr_full_text|clean_html }}
+{{ object.ocr_full_text|clean_plain_text|clean_html }}
