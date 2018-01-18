@@ -97,3 +97,12 @@ LOGGING = {
 SCOPES = 'https://www.googleapis.com/auth/calendar' # for read/write access
 CLIENT_SECRET_FILE = '' # the name of your Google-generated json file
 APPLICATION_NAME = 'NYC Councilmatic'
+
+SITE_META = {
+    'site_name' : 'NYC Councilmatic',
+    'site_desc' : 'Together, we make the laws governing New York City',
+    'site_author' : 'NYC Council & DataMade',
+    'site_url' : 'https://your.url.online/',
+    'twitter_site': '@YourTwitterHandle',
+    'twitter_creator': '@YourTwitterHandle',
+}
