@@ -25,11 +25,11 @@
 <p>
     <span class="small text-muted"><i class="fa fa-fw fa-calendar-o"></i> {% firstof legislation.last_action_date|date:'n/d/Y' legislation.get_last_action_date|date:'n/d/Y' %} - {{legislation.current_action.description | remove_action_subj }}</span><br/>
     <!-- Return only "pseudo topics," i.e. a collection of the organizations that took actions on these bills. -->
-    {% if legislation.pseudo_topics %}
+    {% if legislation.controlling_body %}
         <i class="fa fa-fw fa-tag"></i>
-        {% for tag in legislation.pseudo_topics %}
+        {% for tag in legislation.controlling_body %}
             <span class="badge badge-muted pseudo-topic-tag">
-                <a href='/search/?selected_facets=controlling_body_exact:{{ tag }}'>{{ tag }}</a>
+                <a href='/search/?selected_facets=controlling_body_exact:{{ tag }}'>{{ tag | committee_topic_only }}</a>
             </span>
         {% endfor %}
     {% endif %}
