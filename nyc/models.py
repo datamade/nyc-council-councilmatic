@@ -35,34 +35,29 @@ class NYCBill(Bill):
     # 2 months of the last action
     # using 6 months instead of 2 months for cutoff, to minimize incorrectly labeling
     # in-progress legislation as stale
-    def _is_stale(self, last_action_date):
+    @property
+    def _is_stale(self):
         # stale = no action for 6 months
-        if last_action_date:
-            timediff = datetime.now().replace(tzinfo=app_timezone) - last_action_date
+        last_action = self.actions.order_by('-order').first()
+
+        if last_action and last_action.date:
+            timediff = datetime.now().replace(tzinfo=app_timezone) - last_action.date
             return (timediff.days > 150)
         else:
             return True
 
     # NYC CUSTOMIZATION
-    # After a session ends, all bills that were introduced during that session
-    # and still have an indeterminate status are considered "filed"
-    def _is_filed(self, last_action_date):
-        if last_action_date:
-            if settings.ACTIVE_SESSION > last_action_date:
-                return True
-            else:
-                return False
-        else:
-            # With no date, we can't say for certain whether the session
-            # that this bill was introduced in has passed,
-            # so make the restrained choice and return False
-            return False
-
-    # NYC CUSTOMIZATION
     # whether or not a bill has reached its final 'completed' status
     # what the final status is depends on bill type
-    def _terminal_status(self, history, bill_type):
+    def _terminal_status(self):
+
+        bill_type = self.bill_type
+        actions = self.actions.order_by('-order').all()
+        history = [a.classification for a in actions]
+
         if history:
+            if 'failure' in history:
+                return False
             if bill_type == 'Introduction':
                 if 'executive-signature' in history:
                     return 'Enacted'
@@ -99,13 +94,11 @@ class NYCBill(Bill):
         bill_type = self.bill_type
 
         # these are the bill types for which a status doesn't make sense
-        if bill_type in ['SLR', 'Petition', 'Local Laws 2015']:
+        if self.bill_type in ['SLR', 'Petition', 'Local Laws 2015']:
             return None
-        elif self._terminal_status(classification_hist, bill_type):
-            return self._terminal_status(classification_hist, bill_type)
-        elif self._is_filed(last_action_date):
-            return 'Filed - End of Session'
-        elif self._is_stale(last_action_date):
+        elif self._terminal_status():
+            return self._terminal_status()
+        elif self._is_stale:
             return 'Inactive'
         else:
             return 'Active'

@@ -42,16 +42,28 @@ class TestStatus(TestCase):
             slug = 'inactive-bill'
         )
 
-        cls.filed_bill = NYCBill.objects.create(
+        cls.expired_bill = NYCBill.objects.create(
             ocd_id = 'ocd-bill/' + str(uuid4()),
             ocd_created_at = datetime.datetime.now(pytz.utc),
             ocd_updated_at = datetime.datetime.now(pytz.utc),
-            description = 'Filed bill for testing',
+            description = 'Expired bill for testing',
             identifier = 'T 2018-03',
             bill_type = 'Test bill',
             classification = 'bill',
             source_url = '127.0.0.1:8000',
-            slug = 'filed-bill'
+            slug = 'expired-bill'
+        )
+
+        cls.failed_bill = NYCBill.objects.create(
+            ocd_id = 'ocd-bill/' + str(uuid4()),
+            ocd_created_at = datetime.datetime.now(pytz.utc),
+            ocd_updated_at = datetime.datetime.now(pytz.utc),
+            description = 'Failed bill for testing',
+            identifier = 'T 2018-03',
+            bill_type = 'Test bill',
+            classification = 'bill',
+            source_url = '127.0.0.1:8000',
+            slug = 'failed-bill'
         )
 
         cls.active_action = Action.objects.create(
@@ -66,9 +78,19 @@ class TestStatus(TestCase):
             order = 1,
         )
 
-        cls.filed_action = Action.objects.create(
+        cls.expired_action = Action.objects.create(
+            classification = 'failure',
+            description = 'Filed (End of Session)',
+            date = datetime.datetime.now(pytz.utc),
+            _bill = cls.expired_bill,
+            order = 1,
+        )
+
+        cls.failed_action = Action.objects.create(
+            classification = 'failure',
+            description = 'Defeated by Council',
             date = settings.ACTIVE_SESSION - datetime.timedelta(1),
-            _bill = cls.filed_bill,
+            _bill = cls.failed_bill,
             order = 1,
         )
 
@@ -81,6 +103,10 @@ class TestStatus(TestCase):
         assert self.inactive_bill.inferred_status == 'Inactive'
 
     @pytest.mark.django_db
-    def test_filed_bill(self):
-        assert self.filed_bill.inferred_status == 'Filed - End of Session'
+    def test_expired_bill(self):
+        assert self.expired_bill.inferred_status == 'Expired'
+
+    @pytest.mark.django_db
+    def test_failed_bill(self):
+        assert self.failed_bill.inferred_status == 'Failed'
 
