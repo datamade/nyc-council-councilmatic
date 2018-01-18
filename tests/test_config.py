@@ -1,3 +1,6 @@
+import datetime
+import pytz
+
 SECRET_KEY = 'riva loves cuzzoni'
 
 INSTALLED_APPS = (
@@ -91,4 +94,4 @@ USE_TZ = True
 
 # In order to differentiate between inactive/filed bills, we need to set the current
 # session to some time in the past
-ACTIVE_SESSION = 2017
+ACTIVE_SESSION = datetime.datetime(2017, 1, 1, tzinfo=pytz.timezone(TIME_ZONE))

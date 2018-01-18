@@ -67,7 +67,7 @@ class TestStatus(TestCase):
         )
 
         cls.filed_action = Action.objects.create(
-            date = datetime.datetime(2016, 12, 30),
+            date = settings.ACTIVE_SESSION - datetime.timedelta(1),
             _bill = cls.filed_bill,
             order = 1,
         )

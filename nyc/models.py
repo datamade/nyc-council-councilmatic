@@ -44,6 +44,21 @@ class NYCBill(Bill):
             return True
 
     # NYC CUSTOMIZATION
+    # After a session ends, all bills that were introduced during that session
+    # and still have an indeterminate status are considered "filed"
+    def _is_filed(self, last_action_date):
+        if last_action_date:
+            if settings.ACTIVE_SESSION > last_action_date:
+                return True
+            else:
+                return False
+        else:
+            # With no date, we can't say for certain whether the session
+            # that this bill was introduced in has passed,
+            # so make the restrained choice and return False
+            return False
+
+    # NYC CUSTOMIZATION
     # whether or not a bill has reached its final 'completed' status
     # what the final status is depends on bill type
     def _terminal_status(self, history, bill_type):
@@ -88,6 +103,8 @@ class NYCBill(Bill):
             return None
         elif self._terminal_status(classification_hist, bill_type):
             return self._terminal_status(classification_hist, bill_type)
+        elif self._is_filed(last_action_date):
+            return 'Filed - End of Session'
         elif self._is_stale(last_action_date):
             return 'Inactive'
         else:
