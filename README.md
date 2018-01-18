@@ -209,9 +209,23 @@ DATA_DIR='/tmp/nyccouncilmatic-solr'
 
 But why? This empty repo enforces data persistence. Data persists better on the host, then on the  impermanent Docker container. (Docker philosophy purports the temporality of containers. A container should do its work, then “poof,” go away.)
 
-Dockerizing Solr comes with a few more "gotchas". We use [`solr-create -c nyc-council-councilmatic`](https://github.com/docker-solr/docker-solr#creating-cores) to create the nyc-council-councilmatic solr core. `solr-create` (as opposed to `solr-precreate`) insures that Solr rereads the schema file. However, the `solr-create` command [does not (re)create the core, if it finds a pre-existing core directory](https://github.com/docker-solr/docker-solr/blob/master/7.1/alpine/scripts/solr-create#L38). Thus, we tell Solr to discover data elsewhere:
-(1) by telling docker-compose to mount data here: `/nyc-data`
-(2) by pointing the solrconfig.xml to this location: `<dataDir>/nyc-data</dataDir>`  
+Dockerizing Solr comes with a few more "gotchas". We use [`solr-create -c nyc-council-councilmatic`](https://github.com/docker-solr/docker-solr#creating-cores) to create the nyc-council-councilmatic solr core. `solr-create` (as opposed to `solr-precreate`) insures that Solr rereads the schema file. However, the `solr-create` command [does not (re)create the core, if it finds a pre-existing core directory](https://github.com/docker-solr/docker-solr/blob/master/7.1/alpine/scripts/solr-create#L38). Thus, we tell Solr to discover data in a directory on the local machine, which we "mount" into the Docker container in `docker-compose.yml`. To make sure Solr knows where to look for this directory, edit `solrconfig.xml` and point the `<dataDir>` variable to the right location:
+
+```
+# In solrconfig.xml
+<dataDir>/nyc-data</dataDir>`
+```
+
+Since Solr runs under the `solr` user, we also need to make sure that the data
+directory on the local machine has the right permissions. The solr user
+automatically gets assigned the user ID `8983` corresponding to the default
+port that Solr runs on, and we can leverage that ID to give it access to the
+mounted volume:
+
+```console
+# Set the path according to the DATA_DIR variable
+chown 8983.8983 data/nyccouncilmatic-solr 
+```
 
 Now, you are ready to instantiate your solr container! Run:
 
