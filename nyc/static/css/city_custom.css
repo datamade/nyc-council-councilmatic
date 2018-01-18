@@ -2,6 +2,7 @@
   --navy-blue-color: #2f56a6;
   --govt-gray-color: #767676;
   --salmon-color: #EB6864;
+  --failure-color: #545454;
 }
 
 /* Home page */
@@ -55,6 +56,18 @@
 /* Labels, Buttons */
 .label-enacted{
     background-color: #22B24C;
+}
+
+.label-failed {
+    background-color: var(--failure-color);
+}
+
+.label-expired {
+    background-color: var(--failure-color);
+}
+
+.label-inactive {
+    background-color: var(--govt-gray-color);
 }
 
 .btn-link {
