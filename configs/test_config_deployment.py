@@ -87,3 +87,9 @@ USING_NOTIFICATIONS = True
 ROOT_URLCONF = 'councilmatic.urls'
 
 TIME_ZONE = 'US/Eastern'
+
+USE_TZ = True
+
+# In order to differentiate between inactive/filed bills, we need to set the current
+# session to some time in the past
+ACTIVE_SESSION = datetime.datetime(2017, 1, 1, tzinfo=pytz.timezone(TIME_ZONE))
