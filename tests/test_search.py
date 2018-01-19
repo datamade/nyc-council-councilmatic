@@ -6,8 +6,6 @@ from django.test import TestCase, Client
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator
 
-from nyc.models import NYCBill
-from nyc.views import NYCCouncilmaticFacetedSearchView
 
 # Different combinations of possible parameters
 sorters = ['title', 'date', 'relevance', None]
@@ -28,7 +26,7 @@ def test_search_params(sort_by, ascending, query, mocker):
         if ascending:
             query_string += '&ascending={ascending}'.format(ascending=ascending)
         if query:
-            query_string += '%q={query}'.format(query=query)
+            query_string += '&q={query}'.format(query=query)
     else:
         query_string = ''
 
