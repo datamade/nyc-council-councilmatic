@@ -12,8 +12,6 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-import datetime
-import pytz
 
 from .settings_deployment import *
 from .settings_jurisdiction import *
@@ -122,7 +120,3 @@ BASE_HOSTNAME = '127.0.0.1:8000'
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 ADV_CACHE_INCLUDE_PK = True
-
-# In order to differentiate between inactive/filed bills, we need to set the current
-# session to some time in the past
-ACTIVE_SESSION = datetime.datetime(2018, 1, 1, tzinfo=pytz.timezone(TIME_ZONE))

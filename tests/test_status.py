@@ -89,7 +89,7 @@ class TestStatus(TestCase):
         cls.failed_action = Action.objects.create(
             classification = 'failure',
             description = 'Defeated by Council',
-            date = settings.ACTIVE_SESSION - datetime.timedelta(1),
+            date = datetime.datetime.now(pytz.utc),
             _bill = cls.failed_bill,
             order = 1,
         )
