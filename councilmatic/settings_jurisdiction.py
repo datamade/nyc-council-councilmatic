@@ -69,7 +69,7 @@ FOOTER_CREDITS = [
 ]
 
 # this is the default text in search bars
-SEARCH_PLACEHOLDER_TEXT = "Taxi, Resolution 815-2015, etc."
+SEARCH_PLACEHOLDER_TEXT = "Taxi, zoning, construction, etc."
 
 
 
