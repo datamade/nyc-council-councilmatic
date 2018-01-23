@@ -199,7 +199,7 @@ class NYCCouncilmaticFacetedSearchView(CouncilmaticFacetedSearchView):
         }
 
         sqs = SearchQuerySet().facet('bill_type')\
-                      .facet('sponsorships', sort='index')\
+                      .facet('sponsorships', sort='index', limit=-1)\
                       .facet('controlling_body')\
                       .facet('inferred_status')\
                       .facet('legislative_session', sort='index')\
