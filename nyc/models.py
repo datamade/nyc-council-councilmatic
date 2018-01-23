@@ -35,10 +35,13 @@ class NYCBill(Bill):
     # 2 months of the last action
     # using 6 months instead of 2 months for cutoff, to minimize incorrectly labeling
     # in-progress legislation as stale
-    def _is_stale(self, last_action_date):
+    @property
+    def _is_stale(self):
         # stale = no action for 6 months
-        if last_action_date:
-            timediff = datetime.now().replace(tzinfo=app_timezone) - last_action_date
+        last_action = self.actions.order_by('-order').first()
+
+        if last_action and last_action.date:
+            timediff = datetime.now().replace(tzinfo=app_timezone) - last_action.date
             return (timediff.days > 150)
         else:
             return True
@@ -46,15 +49,25 @@ class NYCBill(Bill):
     # NYC CUSTOMIZATION
     # whether or not a bill has reached its final 'completed' status
     # what the final status is depends on bill type
-    def _terminal_status(self, history, bill_type):
+    @property
+    def _terminal_status(self):
+
+        bill_type = self.bill_type
+        history = {a.classification: a.description for a in self.actions.all()}
+
         if history:
-            if bill_type == 'Introduction':
-                if 'executive-signature' in history:
+            if 'failure' in history.keys():
+                if history['failure'] == 'Filed (End of Session)':
+                    return 'Expired'
+                else:
+                   return 'Failed'
+            elif bill_type == 'Introduction':
+                if 'executive-signature' in history.keys():
                     return 'Enacted'
                 else:
                     return False
             elif bill_type in ['Resolution', 'Land Use Application', 'Communication', "Mayor's Message", 'Land Use Call-Up']:
-                if 'passage' in history:
+                if 'passage' in history.keys():
                     return 'Approved'
                 else:
                     return False
@@ -77,18 +90,12 @@ class NYCBill(Bill):
     # this is used in the colored label in bill listings
     @property
     def inferred_status(self):
-
-        actions = self.actions.all().order_by('-order')
-        classification_hist = [a.classification for a in actions]
-        last_action_date = actions[0].date if actions else None
-        bill_type = self.bill_type
-
         # these are the bill types for which a status doesn't make sense
-        if bill_type in ['SLR', 'Petition', 'Local Laws 2015']:
+        if self.bill_type in ['SLR', 'Petition', 'Local Laws 2015']:
             return None
-        elif self._terminal_status(classification_hist, bill_type):
-            return self._terminal_status(classification_hist, bill_type)
-        elif self._is_stale(last_action_date):
+        elif self._terminal_status:
+            return self._terminal_status
+        elif self._is_stale:
             return 'Inactive'
         else:
             return 'Active'

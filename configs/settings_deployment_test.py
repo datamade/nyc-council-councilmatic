@@ -61,3 +61,5 @@ EMAIL_USE_TLS=True
 EMAIL_HOST_USER='user'
 EMAIL_HOST_PASSWORD='password'
 DEFAULT_FROM_EMAIL='NYC Councilmatic <info@councilmatic.org>'
+
+TIME_ZONE = 'US/Eastern'
