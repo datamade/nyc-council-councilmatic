@@ -2,7 +2,7 @@
   --navy-blue-color: #2f56a6;
   --govt-gray-color: #767676;
   --salmon-color: #EB6864;
-  --failure-color: #545454;
+  --smoky-gray-color: #545454;
 }
 
 /* Home page */
@@ -59,11 +59,11 @@
 }
 
 .label-failed {
-    background-color: var(--failure-color);
+    background-color: var(--smoky-gray-color);
 }
 
 .label-expired {
-    background-color: var(--failure-color);
+    background-color: var(--smoky-gray-color);
 }
 
 .label-inactive {
