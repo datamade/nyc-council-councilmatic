@@ -27,6 +27,14 @@ class NYCBillDetailView(BillDetailView):
     model = NYCBill
 
     def dispatch(self, request, *args, **kwargs):
+        '''
+        NYC Councilmatic requires several redirects, due to the historic nature of the app.
+        The slugs may exist in several older forms:
+        (1) a mangled form: missing a leading zero, e.g., int-262-2018 (old slug) vs. int-0262-2018
+        (2) a mangled form: an added space, e.g.,  t-2015-3713 (old slug) vs. t-2015-3713
+        (3) a shortened form, e.g., res-190 (old slug) 
+        (4) a slug extended with a UUID, e.g., int-262-2018-060ed381 (old slug)
+        '''
         slug = self.kwargs['slug']
 
         try:
@@ -35,20 +43,64 @@ class NYCBillDetailView(BillDetailView):
         except NYCBill.DoesNotExist:
             bill = None
 
+        # Redirects
         if bill is None:
+            # Cases 1 and 4
+            deleted_zeroes = r'^((?!t-)[A-Za-z]+)-(\d{1,3})-([-\d]+)$'
+            match_deleted_zeroes = re.match(deleted_zeroes, slug)
+            if match_deleted_zeroes:
+                prefix = match.group(1)
+                digits_before_hyphen = match.group(2)
+                remainder = match.group(3).split('-')[0]
+                repaired_slug = '{prefix}-{digits_before_hyphen:0>4}-{remainder}'.format(prefix=prefix, digits_before_hyphen=digits_before_hyphen, remainder=remainder)
+            
+            # Case 2
+            added_space = r'^(t)-([-\d]+)$'
+            match_added_space = re.match(added_space, slug)
+            if match_added_space:
+                repaired_slug = '{prefix}{remainder}'.format(prefix=prefix, remainder=remainder)
+        
             try:
-                # Short version of slug, e.g., /legislation/int-262/
+                bill = self.model.objects.get(slug=repaired_slug)
+            except NYCBill.DoesNotExist:
+                # Case 3
                 bill = self.model.objects.get(slug__startswith=slug)
                 response = HttpResponsePermanentRedirect(reverse('bill_detail', args=[bill.slug]))
-            except NYCBill.DoesNotExist:
-                try: 
-                    # Slug with uuid, e.g., /legislation/int-262-2018-060ed381/
-                    one, two, three, four = slug.split('-')
-                    short_slug = slug.replace('-' + four, '')
-                    bill = self.model.objects.get(slug__startswith=short_slug)
-                    response = HttpResponsePermanentRedirect(reverse('bill_detail', args=[bill.slug]))
-                except:
-                    response = HttpResponseNotFound()
+
+            # # Case 1 and 4
+            # try:
+            #     # Old slugs: res-190-2018, res-190-2018-3489283409184098
+            #     # New slug: res-0190-2018
+            #     prefix, digits_before_hyphen, *remainder = slug.split('-')
+            #     remainder = remainder[0] if remainder else ''
+            #     repaired_slug = '{prefix}-{digits_before_hyphen:0>4}-{remainder}'.format(prefix=prefix, digits_before_hyphen=digits_before_hyphen, remainder=remainder)
+            #     bill = self.model.objects.get(slug=repaired_slug)
+            #     response = HttpResponsePermanentRedirect(reverse('bill_detail', args=[bill.slug]))
+            # except NYCBill.DoesNotExist:
+            #     # Case 3
+            #     try:
+            #         bill = self.model.objects.get(slug__startswith=slug)
+            #         response = HttpResponsePermanentRedirect(reverse('bill_detail', args=[bill.slug]))
+            #     except NYCBill.DoesNotExist:
+            #         try: 
+            #             # Old slug: t-2015-3716
+            #             # New slug: t2015-3716
+            #             bill = self.model.objects.get(slug=slug.replace('-', ''))
+
+
+
+
+            # try:
+            #     bill = self.model.objects.get(slug__startswith=slug)
+            #     response = HttpResponsePermanentRedirect(reverse('bill_detail', args=[bill.slug]))
+            # except NYCBill.DoesNotExist:
+            #     try: 
+            #         one, two, three, four = slug.split('-')
+            #         short_slug = slug.replace('-' + four, '')
+            #         bill = self.model.objects.get(slug__startswith=short_slug)
+            #         response = HttpResponsePermanentRedirect(reverse('bill_detail', args=[bill.slug]))
+            #     except:
+            #         response = HttpResponseNotFound()
 
         # Are these code redirects even used? how can we know? 
 
