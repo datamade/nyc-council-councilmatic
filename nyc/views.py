@@ -37,16 +37,20 @@ class NYCBillDetailView(BillDetailView):
 
         if bill is None:
             try:
+                # Short version of slug, e.g., /legislation/int-262/
                 bill = self.model.objects.get(slug__startswith=slug)
                 response = HttpResponsePermanentRedirect(reverse('bill_detail', args=[bill.slug]))
             except NYCBill.DoesNotExist:
                 try: 
+                    # Slug with uuid, e.g., /legislation/int-262-2018-060ed381/
                     one, two, three, four = slug.split('-')
                     short_slug = slug.replace('-' + four, '')
                     bill = self.model.objects.get(slug__startswith=short_slug)
                     response = HttpResponsePermanentRedirect(reverse('bill_detail', args=[bill.slug]))
                 except:
                     response = HttpResponseNotFound()
+
+        # Are these code redirects even used? how can we know? 
 
         return response
 
