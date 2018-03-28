@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponsePermanentRedirect, HttpResponseNotFound, HttpResponse, HttpResponseRedirect
+from django.http import HttpResponsePermanentRedirect, HttpResponseNotFound, HttpResponse, HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.db import transaction, connection, connections
 
@@ -67,7 +67,7 @@ class NYCBillDetailView(BillDetailView):
                 bill = self.model.objects.get(slug__startswith=repaired_slug)
                 response = HttpResponsePermanentRedirect(reverse('bill_detail', args=[bill.slug]))
             except (NYCBill.DoesNotExist, UnboundLocalError):
-                response = HttpResponseNotFound()
+                raise Http404
 
         return response
 
@@ -89,7 +89,7 @@ class NYCCommitteeDetailView(CommitteeDetailView):
                 committee = self.model.objects.get(slug__startswith=slug)
                 response = HttpResponsePermanentRedirect(reverse('committee_detail', args=[committee.slug]))
             except Organization.DoesNotExist:
-                response = HttpResponseNotFound()
+                raise Http404
 
         return response
 
@@ -120,7 +120,7 @@ class NYCPersonDetailView(PersonDetailView):
                 person = self.model.objects.get(name__iexact=person_name)
                 response = HttpResponsePermanentRedirect(reverse('person', args=[person.slug]))
             except Person.DoesNotExist:
-                response = HttpResponseNotFound()
+                raise Http404
 
         return response
 
