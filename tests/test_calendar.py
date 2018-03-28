@@ -6,16 +6,16 @@ from councilmatic_core.models import Event
 from nyc.utils import create_ics_output, create_google_cal_link
   
 @pytest.mark.django_db
-def test_ics_output():
-    event = Event.objects.all().first()
+def test_ics_output(event):
+    event = event.build()
     ics_content = create_ics_output(event).decode("utf-8")
 
     # The content should include the event name.
     assert (event.name in ics_content) == True 
 
 @pytest.mark.django_db
-def test_ical_export(django_db_setup, client):
-    event = Event.objects.all().first()
+def test_ical_export(event, client):
+    event = event.build()
     url = reverse('nyc:ical_export', kwargs={'slug': event.slug})
     response = client.get(url) 
 
@@ -25,8 +25,8 @@ def test_ical_export(django_db_setup, client):
     assert response['Content-Disposition'] == 'attachment; filename={}.ics'.format(event.slug)
 
 @pytest.mark.django_db
-def test_create_google_cal_link(django_db_setup):
-    event = Event.objects.all().first()
+def test_create_google_cal_link(event):
+    event = event.build()
     cal_url = create_google_cal_link(event)
 
     # The output of create_google_cal_link should contain particular substrings. 
