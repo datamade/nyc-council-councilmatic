@@ -32,7 +32,7 @@ class NYCBillDetailView(BillDetailView):
         The slugs may exist in several older forms:
         (1) a slug extended with a UUID, e.g., int-262-2018-060ed381 (old slug)
         (2) a mangled form: missing a leading zero, e.g., int-262-2018 (old slug) vs. int-0262-2018
-        (3) a mangled form: an added space, e.g.,  t-2015-3713 (old slug) vs. t-2015-3713
+        (3) a mangled form: an added space, e.g.,  t-2015-3713 (old slug) vs. t2015-3713
         (4) a shortened form, e.g., res-190 (old slug) 
         '''
         slug = self.kwargs['slug']
