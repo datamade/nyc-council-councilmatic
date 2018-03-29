@@ -46,16 +46,24 @@ class NYCBillDetailView(BillDetailView):
         # No bill? Try to redirect.
         if bill is None:
             # Cases: slug missing a leading zero and/or with UUID, OR slug with a missing leading zero and/or shortened
-            deleted_zeroes = r'^((?!t-)[A-Za-z]+)-(\d+)-*([-\w]*)$'
+            deleted_zeroes = r'^((?!t-)[A-Za-z]+)-(\d+)-([-\w]*)$'
             match_deleted_zeroes = re.match(deleted_zeroes, slug)
             if match_deleted_zeroes:
                 prefix = match_deleted_zeroes.group(1)
                 digits_before_hyphen = match_deleted_zeroes.group(2)
-                remainder = match_deleted_zeroes.group(3).split('-')[0]
+                remainder = match_deleted_zeroes.group(3)
+
+                # Determine if the old slug has a UUID or a version number (e.g., 'int-262-2018-A'): keep the version number.
+                if '-' in remainder:
+                    remainder_list = remainder.split('-')
+                    first_remainder = remainder_list[0] 
+                    second_remainder = remainder_list[1] if len(remainder_list[1]) == 1 else ''
+                    remainder = first_remainder + '-' + second_remainder
+
                 repaired_slug = '{prefix}-{digits_before_hyphen:0>4}-{remainder}'.format(prefix=prefix, digits_before_hyphen=digits_before_hyphen, remainder=remainder).rstrip('-')
             
             # Cases: slug with added space and/or with UUID, OR slug with added space and/or shortened
-            added_space = r'^(t)-(\d+)-*([-\w]*)$'
+            added_space = r'^(t)-(\d+)-([-\w]*)$'
             match_added_space = re.match(added_space, slug)
             if match_added_space:
                 prefix = match_added_space.group(1)
