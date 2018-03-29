@@ -49,7 +49,6 @@ class NYCBillDetailView(BillDetailView):
             deleted_zeroes = r'^((?!t-)[A-Za-z]+)-(\d+)-*([-\w]*)$'
             match_deleted_zeroes = re.match(deleted_zeroes, slug)
             if match_deleted_zeroes:
-                print("askdfjlk!")
                 prefix = match_deleted_zeroes.group(1)
                 digits_before_hyphen = match_deleted_zeroes.group(2)
                 remainder = match_deleted_zeroes.group(3)
