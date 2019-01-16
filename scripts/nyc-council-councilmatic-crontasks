@@ -1,4 +1,4 @@
 # /etc/cron.d/nyc-council-councilmatic-crontasks
 APPDIR=/home/datamade/nyc-council-councilmatic
 PYTHONDIR=/home/datamade/.virtualenvs/nyc-council-councilmatic/bin/python
-5,20,35,50 * * * * datamade /usr/bin/flock -n /tmp/nyc_dataload.lock -c 'cd $APPDIR && $PYTHONDIR manage.py import_data >> /var/log/councilmatic/nyc-council-councilmatic-importdata.log 2>&1 && $PYTHONDIR manage.py update_index --batch-size=100 --age=1 >> /var/log/councilmatic/nyc-updateindex.log 2>&1 && $PYTHONDIR manage.py convert_rtf >> /var/log/councilmatic/nyc-convertrtf.log 2>&1 && $PYTHONDIR manage.py send_notifications >> /var/log/councilmatic/nyc-sendnotifications.log 2>&1'
+# 5,20,35,50 * * * * datamade /usr/bin/flock -n /tmp/nyc_dataload.lock -c 'cd $APPDIR && $PYTHONDIR manage.py import_data >> /var/log/councilmatic/nyc-council-councilmatic-importdata.log 2>&1 && $PYTHONDIR manage.py update_index --batch-size=100 --age=1 >> /var/log/councilmatic/nyc-updateindex.log 2>&1 && $PYTHONDIR manage.py convert_rtf >> /var/log/councilmatic/nyc-convertrtf.log 2>&1 && $PYTHONDIR manage.py send_notifications >> /var/log/councilmatic/nyc-sendnotifications.log 2>&1'
