@@ -72,5 +72,4 @@ def test_search_params(sort_by, order_by, query, mocker):
 
     # Check that the order_by keyword got handled
     if sort_by and sort_by != 'relevance': # Relevance doesn't display an icon for order_by
-        print(search.content.decode('utf-8'))
         assert 'fa-sort-amount-{}'.format(order_by) in search.content.decode('utf-8') 
