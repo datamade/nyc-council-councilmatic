@@ -1,6 +1,7 @@
 from unittest.mock import MagicMock
 
 import pytest
+from lxml import etree
 from haystack.query import SearchQuerySet
 from django.test import TestCase, Client
 from django.core.urlresolvers import reverse
@@ -56,9 +57,15 @@ def test_search_params(sort_by, order_by, query, mocker):
         # Make sure ordering was applied
         assert order_func.call_count == 1
 
+        tree = etree.HTML(search.content.decode('utf-8'))
+
         # Check that a link with correct text in bold font appears on the page.
-        bolded_link = '<strong>{sort_by}</strong>'.format(sort_by=sort_by.title())
-        assert bolded_link in search.content.decode('utf-8')
+        bolded_link, = tree.xpath("//strong/a[contains(@class, 'assort')]")
+        assert bolded_link.text.strip() == sort_by.title()
+
+        # Check that the correct sort icon is displayed once. (Relevance doesn't
+        # display an icon for order_by.)
+        sort_icon, = tree.xpath("//i[contains(@class, 'fa-sort-amount-{}')]".format(order_by))
 
     elif query or sort_by == 'relevance':
         # When a query exists with no sort_by value, we default
@@ -69,7 +76,3 @@ def test_search_params(sort_by, order_by, query, mocker):
         # When no query or sort_by values exist, we default to `date` ordering
         assert order_func.call_count == 1
         assert order_func.called_with('-last_action_date')
-
-    # Check that the order_by keyword got handled
-    if sort_by and sort_by != 'relevance': # Relevance doesn't display an icon for order_by
-        assert 'fa-sort-amount-{}'.format(order_by) in search.content.decode('utf-8') 
