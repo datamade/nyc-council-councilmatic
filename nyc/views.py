@@ -247,18 +247,17 @@ class NYCCouncilmaticFacetedSearchView(CouncilmaticFacetedSearchView):
 
             if dataDict.get('sort_by'):
                 for el in dataDict['sort_by']:
-                    # Do this, because sometimes the 'el' may include a '?' from the URL
-                    if 'date' in el:
-                        if dataDict.get('ascending'):
+                    if el == 'date':
+                        if dataDict.get('order_by') == ['asc']:
                             kwargs['searchqueryset'] = sqs.order_by('last_action_date')
                         else:
                             kwargs['searchqueryset'] = sqs.order_by('-last_action_date')
-                    if 'title' in el:
-                        if dataDict.get('descending'):
+                    if el == 'title':
+                        if dataDict.get('order_by') == ['desc']:
                             kwargs['searchqueryset'] = sqs.order_by('-sort_name')
                         else:
                             kwargs['searchqueryset'] = sqs.order_by('sort_name')
-                    if 'relevance' in el:
+                    if el == 'relevance':
                         kwargs['searchqueryset'] = sqs
 
             elif dataDict.get('q'):
@@ -267,3 +266,4 @@ class NYCCouncilmaticFacetedSearchView(CouncilmaticFacetedSearchView):
                 kwargs['searchqueryset'] = sqs.order_by('-last_action_date')
 
         return self.form_class(data, **kwargs)
+
