@@ -1,5 +1,5 @@
 psycopg2==2.7.6.1
-django-councilmatic==0.10.11
+django-councilmatic==0.10.12
 django-councilmatic-notifications<0.2
 raven==5.30.0
 google-api-python-client==1.6.4
